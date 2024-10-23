@@ -1,0 +1,82 @@
+﻿@model Voucher
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Thông tin voucher</h2>
+        <div class="create-info">Thời gian tạo: 07/10/2024</div>
+        <form class="forms-sample" asp-controller="Voucher" asp-action="Update" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Mã voucher</label>
+                        <input type="text" required="required" class="form-control" readonly
+                               name="VoucherId" value="@Model.VoucherId" placeholder="Mã voucher">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Lượt sử dụng</label>
+                        <input type="text" required="required" class="form-control"
+                               name="MaximumUsed" value="@Model.MaximumUsed"
+                               placeholder="Lượt sử dụng">
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label for="textarea">Nội dung</label>
+                        <textarea type="text" required="required" class="form-control"
+                                  name="Description">@Model.Description</textarea>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="select">
+                        <label>Tình trạng</label>
+                        <select class="Status choose">
+                            <option value="" disabled>--Select Status--</option>
+                            @if(Model.Status)
+                            {
+                                <option value="1" selected>Hoạt động</option>
+                                <option value="0">Không hoạt động</option>
+                            }
+                            else
+                            {
+                                <option value="1">Hoạt động</option>
+                                <option value="0" selected>Không hoạt động</option>
+                            }    
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Phần trăm giảm giá</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">%</span>
+                            </div>
+
+                            <input type="text" class="form-control" name="DiscountPercentage" value="@Model.DiscountPercentage" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Thời gian khởi tạo</label>
+                        <input type="date" required="required" class="form-control" value="@Model.StartedDate.ToString("yyyy-MM-dd")"
+                               name="StartedDate" placeholder="Giờ mở cửa">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Thời gian hết hạn</label>
+                        <input type="date" required="required" class="form-control" value="@Model.ExpiredDate.ToString("yyyy-MM-dd")"
+                               name="ExpiredDate" placeholder="Giờ đóng cửa">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <button class="btn btn-light">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

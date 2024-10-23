@@ -1,0 +1,196 @@
+﻿@model List<Bill>
+
+<div class="statistics-table">
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="static-element">
+                <div class="content-element">
+                    <div class="title-element">
+                        Đã thanh toán
+                    </div>
+                    <div class="price-element">
+                        910.000 đ
+                    </div>
+                    <div class="quantity-element">
+                        4 đơn
+                    </div>
+                </div>
+                <div class="icon-element">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="static-element">
+                <div class="content-element">
+                    <div class="title-element">
+                        Chưa thanh toán
+                    </div>
+                    <div class="price-element">
+                        1.085.000 đ
+                    </div>
+                    <div class="quantity-element">
+                        6 đơn
+                    </div>
+                </div>
+                <div class="icon-element">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="static-element">
+                <div class="content-element">
+                    <div class="title-element">
+                        Tổng
+                    </div>
+                    <div class="price-element">
+                        1.995.000 đ
+                    </div>
+                    <div class="quantity-element">
+                        10 đơn
+                    </div>
+                </div>
+                <div class="icon-element">
+                    <i class="fa-solid fa-dollar-sign"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="static-element">
+                <div class="content-element">
+                    <div class="title-element">
+                        Refresh
+                    </div>
+                    <div class="price-element">
+                        Refresh
+                    </div>
+                    <div class="quantity-element">
+                        Load đơn hàng mới nhất
+                    </div>
+                </div>
+                <div class="icon-element">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-sm-flex align-items-center justify-content-between">
+    <div class="filter">
+        <input type="text" placeholder="Filter mã đơn">
+        <input type="text" placeholder="Filter số điện thoại">
+        <div class="btn-group">
+            <button type="button" class="btn btn-danger">
+                <i class="fa-solid fa-circle-plus"></i> Thanh
+                toán
+            </button>
+            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                    id="dropupMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropupMenuSplitButton1">
+                <h6 class="dropdown-header">Settings</h6>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-success">
+                <i class="fa-solid fa-circle-plus"></i> Tình
+                trạng
+            </button>
+            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
+                    id="dropupMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropupMenuSplitButton1">
+                <h6 class="dropdown-header">Settings</h6>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+        </div>
+    </div>
+    <div class="btn-wrapper">
+        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
+        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
+        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+    </div>
+</div>
+<div class="table-sorter-wrapper">
+    <table id="myTable" class="table table-hover">
+        <thead>
+            <tr>
+                <th class="sortStyle"><input type="checkbox" name="checkboxInput"></th>
+                <th class="sortStyle">Mã đơn</th>
+                <th class="sortStyle">Liên hệ</th>
+                <th class="sortStyle">Ngày tạo</th>
+                <th class="sortStyle">Tổng tiền</th>
+                <th class="sortStyle">Thanh toán</th>
+                <th class="sortStyle">Tình trạng</th>
+                <th class="sortStyle"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="checkboxInput">
+                    </td>
+                    <td>@obj.BillId</td>
+                    <td>
+                        <div class="contact">
+                            <div class="name">@obj.ClientName</div>
+                            <div class="phone">@obj.ClientPhoneNumber</div>
+                        </div>
+                    </td>
+                    <td>03/10/2024</td>
+                    <td>@obj.TotalPrice.ToString("c")</td>
+                    <td>
+                        <div class="payment">
+                            @if (obj.PaymentStatus) {
+                                <div class="status">Chưa thanh toán <i class="fa-solid fa-circle-check"></i></div>
+                            }
+                            else {
+                                <div class="status">Đã thanh toán <i class="fa-solid fa-circle-check" style="color:#41ab5d;"></i></div>
+                            }
+                            <div class="payment-status">
+                                @obj.PaymentMethod
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary">Đơn hàng mới</button>
+                    </td>
+                    <td>
+                        <div class="function">
+                            <div class="edit">
+                                <i class="fa-regular fa-eye"></i>
+                            </div>
+                            <div class="delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+</div>
+<div class="pagination-item">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</div>

@@ -1,0 +1,81 @@
+﻿@model List<Category>
+@{
+    var currentPage = ViewData["CurrentPage"] as int?;
+    var totalPages = ViewData["TotalPages"] as int?;
+}
+
+<div class="page-title">
+    Quản lý danh mục
+</div>
+<div class="d-sm-flex align-items-center justify-content-between">
+    <div class="filter">
+        <input type="text" placeholder="Filter mã danh mục" name="object-id">
+        <input type="text" placeholder="Filter tên danh mục" name="object-name">
+        <a class="btn btn-danger button delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
+    </div>
+    <div class="btn-wrapper">
+        <a asp-controller="Category" asp-action="Create" class="btn button"><i class="fa-solid fa-plus"></i> Thêm</a>
+        <div id="filterButton" class="btn btn-primary text-white me-0"><i class="icon-download"></i>Tìm kiếm</div>
+    </div>
+</div>
+<div class="table-sorter-wrapper">
+    <table id="myTable" class="table table-hover">
+        <thead>
+            <tr>
+                <th class="sortStyle"><input type="checkbox" name="checkboxInputAll"></th>
+                <th class="sortStyle">Mã danh mục</th>
+                <th class="sortStyle">Tên danh mục</th>
+                <th class="sortStyle">Miêu tả</th>
+                <th class="sortStyle"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="checkboxInputId" data-id="@obj.CategoryId">
+                    </td>
+                    <td>@obj.CategoryId</td>
+                    <td>
+                        <div class="category-content">
+                            <img src="@obj.PictureUrl" alt="">
+                            <div class="category-title">
+                                @obj.Name
+                            </div>
+                        </div>
+                    </td>
+                    <td>@obj.Description</td>
+                    <td>
+                        <div class="function">
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.CategoryId" class="edit">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a data-id="@obj.CategoryId" id="delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="pagination-item">
+    <ul class="pagination">
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage - 1 })">Previous</a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(currentPage == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage + 1 })">Next</a>
+        </li>
+    </ul>
+</div>

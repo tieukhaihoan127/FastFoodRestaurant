@@ -1,0 +1,101 @@
+﻿@model List<Voucher>
+@{
+    var currentPage = ViewData["CurrentPage"] as int?;
+    var totalPages = ViewData["TotalPages"] as int?;
+}
+
+<div class="page-title">
+    Quản lý vouchers
+</div>
+<div class="d-sm-flex align-items-center justify-content-between">
+    <div class="filter"> 
+        <input type="text" placeholder="Filter mã voucher" name="object-id">
+        <div class="btn-group">
+            <button type="button" class="btn btn-success">Tình trạng</button>
+            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
+                    id="dropupMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropupMenuSplitButton1">
+                <h6 class="dropdown-header">Settings</h6>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+        </div>
+        <a class="btn btn-danger button delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
+    </div>
+    <div class="btn-wrapper">
+        <a asp-controller="Voucher" asp-action="Create" class="btn button"><i class="fa-solid fa-plus"></i> Thêm</a>
+        <div id="filterButton" class="btn btn-primary text-white me-0"><i class="icon-download"></i>Tìm kiếm</div>
+    </div>
+</div>
+<div class="table-sorter-wrapper">
+    <table id="myTable" class="table table-hover">
+        <thead>
+            <tr>
+                <th class="sortStyle"><input type="checkbox" name="checkboxInputAll"></th>
+                <th class="sortStyle">Mã voucher</th>
+                <th class="sortStyle">Miêu tả</th>
+                <th class="sortStyle">Giảm giá</th>
+                <th class="sortStyle">Lượt sử dụng</th>
+                <th class="sortStyle">Tình trạng</th>
+                <th class="sortStyle"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="checkboxInputId" data-id="@obj.VoucherId">
+                    </td>
+                    <td>@obj.VoucherId</td>
+                    <td>@obj.Description</td>
+                    <td style="font-weight: bold;">@obj.DiscountPercentage %</td>
+                    <td>@obj.MaximumUsed</td>
+                    <td>
+                        @if(obj.Status)
+                        {
+                            <button type="button" class="btn btn-success">Hoạt động</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-danger">Không hoạt động</button>
+                        }
+                    </td>
+                    <td>
+                        <div class="function">
+                            <a asp-controller="Voucher" asp-action="Edit" asp-route-id="@obj.VoucherId" class="edit">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a data-id="@obj.VoucherId" id="delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="pagination-item">
+    <ul class="pagination">
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage - 1 })">Previous</a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(currentPage == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage + 1 })">Next</a>
+        </li>
+    </ul>
+</div>
