@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <base href="/" />
-    <title>Star Admin2 </title>
+    <title>@ViewData["Title"]</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="@Url.Content("~/assets/vendors/feather/feather.css")" />
     <link rel="stylesheet" href="@Url.Content("~/assets/vendors/mdi/css/materialdesignicons.min.css")" />
@@ -229,73 +229,66 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a asp-controller="Home" asp-action="Index" class="nav-link">
+                        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="nav-link">
                             <i class="mdi mdi-grid-large menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item nav-category">Chức năng</li>
                     <li class="nav-item">
-                        <a asp-controller="Bill" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
+                        <a asp-area="Admin" asp-controller="Bill" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="menu-icon fa fa-list-check"></i>
                             <span class="menu-title">Quản lý đơn hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="SystemUser" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
+                        <a asp-area="Admin" asp-controller="SystemUser" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="menu-icon fa fa-user"></i>
                             <span class="menu-title">Quản lý nhân viên</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Store" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
+                        <a asp-area="Admin" asp-controller="Store" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="menu-icon fa fa-store"></i>
-                            <span class="menu-title">Quản lý cửa hàng</span>
+                            <span class="menu-title">Quản lý chi nhánh</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Menu" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
+                        <a asp-area="Admin" asp-controller="Menu" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="menu-icon fa fa-drumstick-bite"></i>
-                            <span class="menu-title">Quản lý món ăn</span>
+                            <span class="menu-title">Quản lý thực đơn</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Category" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="menu-icon fa fa-layer-group"></i>
                             <span class="menu-title">Quản lý danh mục</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Combo" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
+                        <a asp-area="Admin" asp-controller="Combo" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="menu-icon fa fa-star-of-life"></i>
                             <span class="menu-title">Quản lý ưu đãi</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Voucher" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
+                        <a asp-area="Admin" asp-controller="Voucher" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="menu-icon fa fa-ticket"></i>
                             <span class="menu-title">Quản lý voucher</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Party" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
+                        <a asp-area="Admin" asp-controller="Party" asp-action="Index" class="nav-link" data-bs-toggle="collapse" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="menu-icon fa fa-champagne-glasses"></i>
                             <span class="menu-title">Quản lý đặt tiệc</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                           aria-controls="ui-basic">
-                            <i class="menu-icon fa fa-circle-dollar-to-slot"></i>
-                            <span class="menu-title">Doanh thu</span>
                         </a>
                     </li>
                 </ul>
@@ -325,6 +318,7 @@
         <!-- endinject -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+        <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4czTT9l-5i-Smcs_IcgRlKgc0RKS_D5U&callback=console.debug&libraries=maps,marker&v=beta" async defer></script>
         <!-- Plugin js for this page -->
         <script src="assets/vendors/chart.js/chart.umd.js"></script>
         <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
@@ -337,6 +331,7 @@
         <script src="assets/js/todolist.js"></script>
         <script src="assets/js/custom.js"></script>
         <script src="assets/js/filter.js"></script>
+        <script src="assets/js/selectAPI.js"></script>
         <!-- endinject -->
         <!-- Custom js for this page-->
         <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>

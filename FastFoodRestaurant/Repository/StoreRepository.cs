@@ -13,6 +13,12 @@ namespace FastFoodRestaurant.Repository
             _db = db;
         }
 
+        public Store getSingleStore(System.Linq.Expressions.Expression<Func<Store, bool>> filter)
+        {
+            var singleItem = _db.Stores.Where(filter).FirstOrDefault();
+            return singleItem;
+        }
+
         public void Save()
         {
             _db.SaveChanges();

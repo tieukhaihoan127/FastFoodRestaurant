@@ -1,157 +1,89 @@
-﻿<div class="page-title">
-    Quản lý ưu đãi
+﻿@model List<Combo>
+@{
+    var currentPage = ViewData["CurrentPage"] as int?;
+    var totalPages = ViewData["TotalPages"] as int?;
+    ViewData["Title"] = "Quản lý ưu đãi";
+}
+
+<div class="page-title">
+    Quản lý thực đơn
 </div>
 <div class="d-sm-flex align-items-center justify-content-between">
-    <div class="filter">
-        <input type="text" placeholder="Filter mã thức ăn">
-        <input type="text" placeholder="Filter tên thức ăn">
-        <div class="btn-group">
-            <button type="button" class="btn btn-success">Danh mục món ăn</button>
-            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
-                    id="dropupMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropupMenuSplitButton1">
-                <h6 class="dropdown-header">Settings</h6>
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-        </div>
-    </div>
     <div class="btn-wrapper">
-        <a href="/" class="btn button"><i class="fa-solid fa-plus"></i> Thêm</a>
-        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+        <div class="select">
+            <select class="choose">
+                <option value="" disabled selected>Danh mục</option>
+            </select>
+        </div>
+        <a asp-controller="Combo" asp-action="Create" class="btn btn-success text-white plus"><i class="fa-solid fa-plus"></i> Thêm</a>
+        <a class="btn btn-danger text-white delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
+    </div>
+    <div class="filter">
+        <input type="text" placeholder="Filter mã ưu đãi" name="object-id">
+        <input type="text" placeholder="Filter tên ưu đãi" name="object-name">
+        <a id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a>
     </div>
 </div>
 <div class="table-sorter-wrapper">
     <table id="myTable" class="table table-hover">
         <thead>
             <tr>
-                <th class="sortStyle"><input type="checkbox" name="checkboxInput"></th>
-                <th class="sortStyle">Mã ưu đãi</th>
-                <th class="sortStyle">Tên ưu đãi</th>
+                <th class="sortStyle"><input type="checkbox" name="checkboxInputAll"></th>
+                <th class="sortStyle">Mã thực đơn</th>
+                <th class="sortStyle">Tên thực đơn</th>
                 <th class="sortStyle">Miêu tả</th>
                 <th class="sortStyle">Giá tiền</th>
                 <th class="sortStyle"></th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <input type="checkbox" name="checkboxInput">
-                </td>
-                <td>CB0000000001</td>
-                <td>
-                    <div class="category-content">
-                        <img src="/src/assets/images/burger.webp" alt="">
-                        <div class="category-title">
-                            Family Combo 1
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="checkboxInputId" data-id="@obj.ComboId">
+                    </td>
+                    <td>@obj.ComboId</td>
+                    <td>
+                        <div class="category-content">
+                            <img src="@obj.PictureUrl" alt="">
+                            <div class="category-title">
+                                @obj.Name
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry</td>
-                <td style="font-weight: bold;">56.000 đ</td>
-                <td>
-                    <div class="function">
-                        <div class="edit">
-                            <i class="fa-regular fa-eye"></i>
+                    </td>
+                    <td>@obj.Description</td>
+                    <td style="font-weight: bold;">@obj.Price đ</td>
+                    <td>
+                        <div class="function">
+                            <a asp-controller="Combo" asp-action="Edit" asp-route-id="@obj.ComboId" class="edit">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a data-id="@obj.ComboId" id="delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
                         </div>
-                        <div class="delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="checkboxInput">
-                </td>
-                <td>CB0000000002</td>
-                <td>
-                    <div class="category-content">
-                        <img src="/src/assets/images/chicken.jpg" alt="">
-                        <div class="category-title">
-                            Family Combo 2
-                        </div>
-                    </div>
-                </td>
-                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry</td>
-                <td style="font-weight: bold;">47.000 đ</td>
-                <td>
-                    <div class="function">
-                        <div class="edit">
-                            <i class="fa-regular fa-eye"></i>
-                        </div>
-                        <div class="delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="checkboxInput">
-                </td>
-                <td>CB0000000003</td>
-                <td>
-                    <div class="category-content">
-                        <img src="/src/assets/images/rice.jpg" alt="">
-                        <div class="category-title">
-                            Happy Friday
-                        </div>
-                    </div>
-                </td>
-                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry</td>
-                <td style="font-weight: bold;">62.000 đ</td>
-                <td>
-                    <div class="function">
-                        <div class="edit">
-                            <i class="fa-regular fa-eye"></i>
-                        </div>
-                        <div class="delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="checkboxInput">
-                </td>
-                <td>CB0000000004</td>
-                <td>
-                    <div class="category-content">
-                        <img src="/src/assets/images/drinks.jpg" alt="">
-                        <div class="category-title">
-                            Buy one get one
-                        </div>
-                    </div>
-                </td>
-                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry</td>
-                <td style="font-weight: bold;">97.000 đ</td>
-                <td>
-                    <div class="function">
-                        <div class="edit">
-                            <i class="fa-regular fa-eye"></i>
-                        </div>
-                        <div class="delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
 <div class="pagination-item">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage - 1 })">Previous</a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(currentPage == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage + 1 })">Next</a>
+        </li>
     </ul>
 </div>

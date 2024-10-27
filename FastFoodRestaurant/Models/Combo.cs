@@ -6,7 +6,7 @@ namespace FastFoodRestaurant.Models
     public class Combo
     {
         [Key]
-        public string Id { get; set; }
+        public string ComboId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -17,10 +17,7 @@ namespace FastFoodRestaurant.Models
         public string PictureUrl { get; set; }
         [Required]
         public Boolean IsActive { get; set; }
-        [Required]
-        public string CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public Boolean IsForParty { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeleteDate { get; set; }

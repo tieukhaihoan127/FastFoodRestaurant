@@ -2,35 +2,26 @@
 @{
     var currentPage = ViewData["CurrentPage"] as int?;
     var totalPages = ViewData["TotalPages"] as int?;
+    ViewData["Title"] = "Quản lý thực đơn";
 }
 
 <div class="page-title">
     Quản lý thực đơn
 </div>
 <div class="d-sm-flex align-items-center justify-content-between">
+    <div class="btn-wrapper">
+        <div class="select">
+            <select class="choose">
+                <option value="" disabled selected>Danh mục</option>
+            </select>
+        </div>
+        <a asp-controller="Menu" asp-action="Create" class="btn btn-success text-white plus"><i class="fa-solid fa-plus"></i> Thêm</a>
+        <a class="btn btn-danger text-white delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
+    </div>
     <div class="filter">
         <input type="text" placeholder="Filter mã thức ăn" name="object-id">
         <input type="text" placeholder="Filter tên thức ăn" name="object-name">
-        <a class="btn btn-danger button delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
-        <div class="btn-group">
-            <button type="button" class="btn btn-success">Danh mục món ăn</button>
-            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
-                    id="dropupMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropupMenuSplitButton1">
-                <h6 class="dropdown-header">Settings</h6>
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-        </div>
-    </div>
-    <div class="btn-wrapper">
-        <a asp-controller="Menu" asp-action="Create" class="btn button"><i class="fa-solid fa-plus"></i> Thêm</a>
-        <div id="filterButton" class="btn btn-primary text-white me-0"><i class="icon-download"></i>Tìm kiếm</div>
+        <a id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a>
     </div>
 </div>
 <div class="table-sorter-wrapper">

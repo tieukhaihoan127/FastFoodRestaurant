@@ -2,20 +2,21 @@
 @{
     var currentPage = ViewData["CurrentPage"] as int?;
     var totalPages = ViewData["TotalPages"] as int?;
+    ViewData["Title"] = "Quản lý danh mục";
 }
 
 <div class="page-title">
     Quản lý danh mục
 </div>
 <div class="d-sm-flex align-items-center justify-content-between">
+    <div class="btn-wrapper">
+        <a asp-controller="Category" asp-action="Create" class="btn btn-success text-white plus"><i class="fa-solid fa-plus"></i> Thêm</a>
+        <a class="btn btn-danger text-white delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
+    </div>
     <div class="filter">
         <input type="text" placeholder="Filter mã danh mục" name="object-id">
         <input type="text" placeholder="Filter tên danh mục" name="object-name">
-        <a class="btn btn-danger button delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
-    </div>
-    <div class="btn-wrapper">
-        <a asp-controller="Category" asp-action="Create" class="btn button"><i class="fa-solid fa-plus"></i> Thêm</a>
-        <div id="filterButton" class="btn btn-primary text-white me-0"><i class="icon-download"></i>Tìm kiếm</div>
+        <a id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a>
     </div>
 </div>
 <div class="table-sorter-wrapper">

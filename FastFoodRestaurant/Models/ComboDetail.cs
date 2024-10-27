@@ -12,6 +12,6 @@ namespace FastFoodRestaurant.Models
         [ForeignKey("MenuId")]
         public Menu Menu { get; set; }
         [Required]
-        public int Quantity { get; set; }
+        public int MaximumQuantity { get; set; }
     }
 }

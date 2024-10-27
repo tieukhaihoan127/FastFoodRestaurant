@@ -1,35 +1,33 @@
-﻿<div class="page-title">
+﻿@model List<Party>
+@{
+    var currentPage = ViewData["CurrentPage"] as int?;
+    var totalPages = ViewData["TotalPages"] as int?;
+    ViewData["Title"] = "Quản lý tiệc";
+}
+
+<div class="page-title">
     Quản lý đặt tiệc
 </div>
 <div class="d-sm-flex align-items-center justify-content-between">
-    <div class="filter">
-        <input type="text" placeholder="Filter mã tiệc">
-        <input type="text" placeholder="Filter số điện thoại">
-        <div class="btn-group">
-            <button type="button" class="btn btn-warning"><i class="fa-solid fa-gift"></i> Loại tiệc</button>
-            <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split"
-                    id="dropupMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropupMenuSplitButton1">
-                <h6 class="dropdown-header">Settings</h6>
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-        </div>
-    </div>
     <div class="btn-wrapper">
-        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+        <div class="select">
+            <select class="choose">
+                <option value="" disabled selected>Loại tiệc</option>
+            </select>
+        </div>
+        <a class="btn btn-danger text-white delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
+    </div>
+    <div class="filter">
+        <input type="text" placeholder="Filter mã tiệc" name="object-id">
+        <input type="text" placeholder="Filter số điện thoại" name="object-name">
+        <a id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a>
     </div>
 </div>
 <div class="table-sorter-wrapper">
     <table id="myTable" class="table table-hover">
         <thead>
             <tr>
-                <th class="sortStyle"><input type="checkbox" name="checkboxInput"></th>
+                <th class="sortStyle"><input type="checkbox" name="checkboxInputAll"></th>
                 <th class="sortStyle">Mã tiệc</th>
                 <th class="sortStyle">Thông tin người đặt</th>
                 <th class="sortStyle">Chủ tiệc</th>
@@ -40,119 +38,60 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <input type="checkbox" name="checkboxInput">
-                </td>
-                <td>PT000000001</td>
-                <td>
-                    <div class="contact">
-                        <div class="name">Tiêu Khải Hoàn</div>
-                        <div class="phone">0764795487</div>
-                    </div>
-                </td>
-                <td>Quyền Chí Long</td>
-                <td>tieukhaihoan127@gmail.com</td>
-                <td>Sinh nhật</td>
-                <td>06/10/2024</td>
-                <td>
-                    <div class="function">
-                        <div class="edit">
-                            <i class="fa-regular fa-eye"></i>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="checkboxInputId" data-id="@obj.PartyId">
+                    </td>
+                    <td>@obj.PartyId</td>
+                    <td>
+                        <div class="contact">
+                            <div class="name">@obj.BookingName</div>
+                            <div class="phone">@obj.PhoneNumber</div>
                         </div>
-                        <div class="delete">
-                            <i class="fa-solid fa-trash"></i>
+                    </td>
+                    <td>@obj.ClientName</td>
+                    <td>@obj.Email</td>
+                    @if(obj.Type)
+                    {
+                        <td>Sinh nhật</td>
+                    }
+                    else
+                    {
+                        <td>Liên hoan</td>
+                    }
+                    <td>@obj.PartyDate</td>
+                    <td>
+                        <div class="function">
+                            <a asp-controller="Party" asp-action="Edit" asp-route-id="@obj.PartyId" class="edit">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a data-id="@obj.PartyId" id="delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="checkboxInput">
-                </td>
-                <td>PT000000002</td>
-                <td>
-                    <div class="contact">
-                        <div class="name">Nguyễn T</div>
-                        <div class="phone">0764733487</div>
-                    </div>
-                </td>
-                <td>Doãn Chí Bình</td>
-                <td>nguyent@gmail.com</td>
-                <td>Liên hoan</td>
-                <td>06/10/2024</td>
-                <td>
-                    <div class="function">
-                        <div class="edit">
-                            <i class="fa-regular fa-eye"></i>
-                        </div>
-                        <div class="delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="checkboxInput">
-                </td>
-                <td>PT000000003</td>
-                <td>
-                    <div class="contact">
-                        <div class="name">Trương Tuyết Mai</div>
-                        <div class="phone">0938321366</div>
-                    </div>
-                </td>
-                <td>Quách Đạt Phúc</td>
-                <td>truongtuyetmai@gmail.com</td>
-                <td>Sinh nhật</td>
-                <td>10/10/2024</td>
-                <td>
-                    <div class="function">
-                        <div class="edit">
-                            <i class="fa-regular fa-eye"></i>
-                        </div>
-                        <div class="delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="checkboxInput">
-                </td>
-                <td>PT000000004</td>
-                <td>
-                    <div class="contact">
-                        <div class="name">Lê Diễm Xưa</div>
-                        <div class="phone">0123456789</div>
-                    </div>
-                </td>
-                <td>Nguyễn Milo</td>
-                <td>lediemxua@gmail.com</td>
-                <td>Liên hoan</td>
-                <td>16/10/2024</td>
-                <td>
-                    <div class="function">
-                        <div class="edit">
-                            <i class="fa-regular fa-eye"></i>
-                        </div>
-                        <div class="delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
 <div class="pagination-item">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage - 1 })">Previous</a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(currentPage == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage + 1 })">Next</a>
+        </li>
     </ul>
 </div>

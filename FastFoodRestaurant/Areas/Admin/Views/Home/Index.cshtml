@@ -1,6 +1,16 @@
-﻿<div class="dashboard-info">
+﻿@model List<Bill>
+@{
+    var today = ViewData["Today"] as string;
+    var thisWeekSum = ViewData["ThisWeekSum"] as double?;
+    var thisWeekCount = ViewData["ThisWeekCount"] as int?;
+    var thisMonthSum = ViewData["ThisMonthSum"] as double?;
+    var thisMonthCount = ViewData["ThisMonthCount"] as int?;
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="dashboard-info">
     <div class="hello">Xin chào!</div>
-    <div class="date">Thứ sáu, 4 tháng 10, 2024</div>
+    <div class="date">@today</div>
     <div class="desc">Thống kê các đơn hàng đã được thanh toán</div>
 </div>
 <div class="statistics-table">
@@ -12,10 +22,7 @@
                         Tuần này
                     </div>
                     <div class="price-element">
-                        182.000 đ
-                    </div>
-                    <div class="quantity-element">
-                        18% so với tuần trước
+                        @thisWeekSum đ
                     </div>
                 </div>
                 <div class="icon-element">
@@ -30,10 +37,7 @@
                         Tháng này
                     </div>
                     <div class="price-element">
-                        336.000 đ
-                    </div>
-                    <div class="quantity-element">
-                        Không có dữ liệu tháng trước
+                        @thisMonthSum đ
                     </div>
                 </div>
                 <div class="icon-element">
@@ -48,10 +52,7 @@
                         Đơn tuần này
                     </div>
                     <div class="price-element">
-                        2 đơn
-                    </div>
-                    <div class="quantity-element">
-                        100% so với tuần trước
+                        @thisWeekCount đơn
                     </div>
                 </div>
                 <div class="icon-element">
@@ -66,10 +67,7 @@
                         Đơn tháng này
                     </div>
                     <div class="price-element">
-                        3 đơn
-                    </div>
-                    <div class="quantity-element">
-                        Không có dữ liệu tháng trước
+                        @thisMonthCount đơn
                     </div>
                 </div>
                 <div class="icon-element">
@@ -102,72 +100,49 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>B00000000001</td>
-                    <td>
-                        <div class="contact">
-                            <div class="name">Tiêu Khải Hoàn</div>
-                            <div class="phone">0764795487</div>
-                        </div>
-                    </td>
-                    <td>03/10/2024</td>
-                    <td>192.000 đ</td>
-                    <td>
-                        <div class="payment">
-                            <div class="status">Đã thanh toán <i class="fa-solid fa-circle-check"></i></div>
-                            <div class="payment-status">
-                                Ship COD
+                @foreach(var obj in Model)
+                {
+                    <tr>
+                        <td>@obj.BillId</td>
+                        <td>
+                            <div class="contact">
+                                <div class="name">@obj.ClientName</div>
+                                <div class="phone">@obj.ClientPhoneNumber</div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Đơn hàng mới</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>B00000000002</td>
-                    <td>
-                        <div class="contact">
-                            <div class="name">Nguyễn Văn A</div>
-                            <div class="phone">0903138081</div>
-                        </div>
-                    </td>
-                    <td>01/10/2024</td>
-                    <td>76.000 đ</td>
-                    <td>
-                        <div class="payment">
-                            <div class="status">Đã thanh toán <i class="fa-solid fa-circle-check"></i></div>
-                            <div class="payment-status">
-                                Ship COD
+                        </td>
+                        <td>@obj.CreatedDate</td>
+                        <td>@obj.TotalPrice đ</td>
+                        <td>
+                            <div class="payment">
+                                @if (obj.PaymentStatus)
+                                {
+                                    <div class="status">Chưa thanh toán <i class="fa-solid fa-circle-check"></i></div>
+                                }
+                                else
+                                {
+                                    <div class="status">Đã thanh toán <i class="fa-solid fa-circle-check" style="color:#41ab5d;"></i></div>
+                                }
+                                <div class="payment-status">
+                                    @obj.PaymentMethod
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Đơn hàng mới</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>B00000000003</td>
-                    <td>
-                        <div class="contact">
-                            <div class="name">Nguyễn Hoàng B</div>
-                            <div class="phone">0903876456</div>
-                        </div>
-                    </td>
-                    <td>25/09/2024</td>
-                    <td>871.000 đ</td>
-                    <td>
-                        <div class="payment">
-                            <div class="status">Đã thanh toán <i class="fa-solid fa-circle-check"></i></div>
-                            <div class="payment-status">
-                                Ship COD
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-success">Hoàn tất</button>
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            @if (obj.Status == 1)
+                            {
+                                <button type="button" class="btn btn-primary">Đơn hàng mới</button>
+                            }
+                            else if (obj.Status == 2)
+                            {
+                                <button type="button" class="btn btn-warning">Đang chuẩn bị</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-success">Thành công</button>
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

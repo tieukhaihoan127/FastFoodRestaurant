@@ -30,6 +30,11 @@ namespace FastFoodRestaurant.Repository
             return _db.Menus.Include(m => m.Category).Where(filter).FirstOrDefault();
         }
 
+        public List<Category> GetUniqueCategory()
+        {
+            return _db.Menus.Include(m => m.Category) .Select(m => m.Category).Distinct().ToList();
+        }
+
         public void Save()
         {
             _db.SaveChanges();

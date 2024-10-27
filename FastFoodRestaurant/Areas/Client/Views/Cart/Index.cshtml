@@ -1,4 +1,11 @@
-﻿<div class="container">
+﻿@{
+    var toBuyList = ViewData["ToBuyList"] as List<Combo>;
+    var suggestList = ViewData["SuggestList"] as List<Menu>;
+    var selectedStore = ViewData["SelectedStore"] as Store;
+    ViewData["Title"] = "Giỏ hàng";
+}
+
+<div class="container">
     <form action="">
         <div class="row">
             <div class="col-xxl-7">
@@ -12,222 +19,81 @@
                         </button>
                     </div>
                     <div class="cart-list">
-                        <div class="cart-list-item">
-                            <div class="cart-list-left">
-                                <a href="">
-                                    <img src="./images/menu2.jpg" alt="">
-                                </a>
-                                <div class="cart-list-info">
-                                    <a class="cart-info-name">
-                                        Loy Set
+                        @foreach(var obj in toBuyList)
+                        {
+                            <div class="cart-list-item">
+                                <div class="cart-list-left">
+                                    <a href="">
+                                        <img src="@obj.PictureUrl" alt="">
                                     </a>
-                                    <div class="cart-info-desc">
-                                        1 x Loy Set
-                                    </div>
-                                    <div class="cart-info-price">
-                                        149.000 đ
+                                    <div class="cart-list-info">
+                                        <a class="cart-info-name">
+                                            @obj.Name
+                                        </a>
+                                        <div class="cart-info-desc">
+                                            1 x @obj.Name
+                                        </div>
+                                        <div class="cart-info-price">
+                                            @obj.Price.ToString("N0", System.Globalization.CultureInfo.InvariantCulture) đ
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="cart-list-right">
-                                <div class="cart-list-quantity">
-                                    <ul>
-                                        <li class="minus">
-                                            -
-                                        </li>
-                                        <li class="quantity">
-                                            1
-                                        </li>
-                                        <li class="plus">
-                                            +
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="cart-info-delete">
-                                    <i class="fa-solid fa-trash"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cart-list-item">
-                            <div class="cart-list-left">
-                                <a href="">
-                                    <img src="./images/menu2.jpg" alt="">
-                                </a>
-                                <div class="cart-list-info">
-                                    <div class="cart-info-name">
-                                        Judi Set
+                                <div class="cart-list-right">
+                                    <div class="cart-list-quantity">
+                                        <ul>
+                                            <li class="minus">
+                                                -
+                                            </li>
+                                            <li class="quantity">
+                                                1
+                                            </li>
+                                            <li class="plus">
+                                                +
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="cart-info-desc">
-                                        1 x Loy Set
-                                    </div>
-                                    <div class="cart-info-price">
-                                        199.000 đ
+                                    <div class="cart-info-delete">
+                                        <i class="fa-solid fa-trash"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="cart-list-right">
-                                <div class="cart-list-quantity">
-                                    <ul>
-                                        <li class="minus">
-                                            -
-                                        </li>
-                                        <li class="quantity">
-                                            1
-                                        </li>
-                                        <li class="plus">
-                                            +
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="cart-info-delete">
-                                    <i class="fa-solid fa-trash"></i>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                     <div class="cart-suggest">
                         <div class="cart-suggest-title">
                             <b>NGON HƠN KHI ĂN KÈM</b>
                         </div>
                         <div class="slideshow-suggest slick-arrow-square">
-                            <a href="/" class="suggest-item">
-                                <img src="/images/menu1.jpg" alt="menu1">
-                                <div class="suggest-name">Gà lắc</div>
-                                <div class="suggest-price">
-                                    44.000 đ
-                                </div>
-                                <div class="suggest-list-quantity">
-                                    <ul>
-                                        <li class="minus">
-                                            -
-                                        </li>
-                                        <li class="quantity">
-                                            1
-                                        </li>
-                                        <li class="plus">
-                                            +
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button class="suggest-update">
-                                    Cập nhật
-                                </button>
-                            </a>
-                            <a href="/" class="suggest-item">
-                                <img src="/images/menu11.jpg" alt="menu1">
-                                <div class="suggest-name">Khoai tây</div>
-                                <div class="suggest-price">
-                                    51.000 đ
-                                </div>
-                                <div class="suggest-list-quantity">
-                                    <ul>
-                                        <li class="minus">
-                                            -
-                                        </li>
-                                        <li class="quantity">
-                                            1
-                                        </li>
-                                        <li class="plus">
-                                            +
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button class="suggest-update">
-                                    Cập nhật
-                                </button>
-                            </a>
-                            <a href="/" class="suggest-item">
-                                <img src="/images/menu3.jpg" alt="menu1">
-                                <div class="suggest-name">Kem</div>
-                                <div class="suggest-price">
-                                    24.000 đ
-                                </div>
-                                <div class="suggest-list-quantity">
-                                    <ul>
-                                        <li class="minus">
-                                            -
-                                        </li>
-                                        <li class="quantity">
-                                            1
-                                        </li>
-                                        <li class="plus">
-                                            +
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button class="suggest-update">
-                                    Cập nhật
-                                </button>
-                            </a>
-                            <a href="/" class="suggest-item">
-                                <img src="/images/menu4.jpg" alt="menu1">
-                                <div class="suggest-name">Mực rán</div>
-                                <div class="suggest-price">
-                                    45.000 đ
-                                </div>
-                                <div class="suggest-list-quantity">
-                                    <ul>
-                                        <li class="minus">
-                                            -
-                                        </li>
-                                        <li class="quantity">
-                                            1
-                                        </li>
-                                        <li class="plus">
-                                            +
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button class="suggest-update">
-                                    Cập nhật
-                                </button>
-                            </a>
-                            <a href="/" class="suggest-item">
-                                <img src="/images/menu7.jpg" alt="menu1">
-                                <div class="suggest-name">Salad</div>
-                                <div class="suggest-price">
-                                    20.000 đ
-                                </div>
-                                <div class="suggest-list-quantity">
-                                    <ul>
-                                        <li class="minus">
-                                            -
-                                        </li>
-                                        <li class="quantity">
-                                            1
-                                        </li>
-                                        <li class="plus">
-                                            +
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button class="suggest-update">
-                                    Cập nhật
-                                </button>
-                            </a>
-                            <a href="/" class="suggest-item">
-                                <img src="/images/menu8.jpg" alt="menu1">
-                                <div class="suggest-name">Khoai tây nghiền</div>
-                                <div class="suggest-price">
-                                    20.000 đ
-                                </div>
-                                <div class="suggest-list-quantity">
-                                    <ul>
-                                        <li class="minus">
-                                            -
-                                        </li>
-                                        <li class="quantity">
-                                            1
-                                        </li>
-                                        <li class="plus">
-                                            +
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button class="suggest-update">
-                                    Cập nhật
-                                </button>
-                            </a>
+                            @foreach(var obj in suggestList)
+                            {
+                                @if (obj.CategoryId.Equals("CT0000000004        ") || obj.CategoryId.Equals("CT0000000007        "))
+                                {
+                                    <a href="/" class="suggest-item">
+                                        <img src="@obj.PictureUrl" alt="menu1">
+                                        <div class="suggest-name">@obj.Name</div>
+                                        <div class="suggest-price">
+                                            @obj.Price.ToString("N0", System.Globalization.CultureInfo.InvariantCulture) đ
+                                        </div>
+                                        <div class="suggest-list-quantity">
+                                            <ul>
+                                                <li class="minus">
+                                                    -
+                                                </li>
+                                                <li class="quantity">
+                                                    1
+                                                </li>
+                                                <li class="plus">
+                                                    +
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <button class="suggest-update">
+                                            Cập nhật
+                                        </button>
+                                    </a>
+                                }
+                            }
+                            
                         </div>
                     </div>
                     <div class="cart-note">
@@ -251,11 +117,11 @@
                             </div>
                         </div>
                         <div class="cart-store">
-                            Cửa hàng: LotteMart Q7
+                            Cửa hàng: @selectedStore.Name
                         </div>
                         <div class="line-dot"></div>
                         <div class="time">
-                            Thời gian tiếp nhận đơn hàng từ 10:00 đến 21:00 hằng ngày
+                            Thời gian tiếp nhận đơn hàng từ @selectedStore.OpeningHour?.ToString(@"hh\:mm") đến @selectedStore.ClosingTime?.ToString(@"hh\:mm") hằng ngày
                         </div>
                     </div>
                     <div class="cart-select">

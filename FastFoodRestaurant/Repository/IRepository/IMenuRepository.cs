@@ -8,6 +8,7 @@ namespace FastFoodRestaurant.Repository.IGenericRepository
         IEnumerable<Menu> GetIncludeCategoryAll();
         IEnumerable<Menu> GetIncludeCategoryAllExpression(Expression<Func<Menu, bool>> filter);
         Menu GetSingleMenuWithCategory(Expression<Func<Menu, bool>> filter);
+        List<Category> GetUniqueCategory();
         void Update(Menu obj);
         void Save();
     }

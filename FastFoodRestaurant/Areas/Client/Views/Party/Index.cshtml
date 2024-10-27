@@ -1,4 +1,10 @@
-﻿<div class="container">
+﻿@model List<Combo>
+@{
+    var comboDetailList = ViewData["ComboDetailList"] as List<ComboDetail>;
+    ViewData["Title"] = "Đặt tiệc";
+}
+
+<div class="container">
     <div class="party-top">
         <div class="party-header">
             Buổi tiệc khó quên cùng những món ngon
@@ -8,28 +14,28 @@
         </div>
         <ul>
             <li>
-                <img src="./images/party1.png" alt="">
+                <img src="/assets/images/party1.png" alt="">
                 <div class="text"></div>
             </li>
             <li>
-                <img src="./images/party2.png" alt="">
+                <img src="/assets/images/party2.png" alt="">
                 <div class="text"></div>
             </li>
             <li>
-                <img src="./images/party3.png" alt="">
+                <img src="/assets/images/party3.png" alt="">
                 <div class="text"></div>
             </li>
             <li>
-                <img src="./images/party4.png" alt="">
+                <img src="/assets/images/party4.png" alt="">
                 <div class="text"></div>
             </li>
             <li>
-                <img src="./images/party5.png" alt="">
+                <img src="/assets/images/party5.png" alt="">
                 <div class="text"></div>
             </li>
         </ul>
         <div class="order-button">
-            <button>Đặt hàng</button>
+            <button>Đặt tiệc</button>
         </div>
     </div>
     <div class="party-middle">
@@ -39,122 +45,35 @@
         <div class="order-content">
             <div class="container">
                 <div class="row">
-                    <div class="col-xxl-3">
-                        <div class="promotion-box">
-                            <div class="order-image">
-                                <img src="./images/slide1.jpg" alt="">
-                            </div>
-                            <div class="order-text">
-                                <div class="promotion-name">
-                                    COMBO HAPPY VIP
+                    @foreach(var obj in Model)
+                    {
+                        <div class="col-xxl-3">
+                            <div class="promotion-box">
+                                <div class="order-image">
+                                    <img src="@obj.PictureUrl" alt="@obj.Description">
                                 </div>
-                                <div class="promotion-price">
-                                    99.000đ / người
+                                <div class="order-text">
+                                    <div class="promotion-name">
+                                        @obj.Name
+                                    </div>
+                                    <div class="promotion-price">
+                                        @obj.Price.ToString("N0", System.Globalization.CultureInfo.InvariantCulture)đ / người
+                                    </div>
+                                    <ul class="menu-list">
+                                        @foreach(var item in comboDetailList)
+                                        {
+                                            @if(obj.ComboId == item.ComboId)
+                                            {
+                                                <li>
+                                                    1 @item.Menu.Name
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
                                 </div>
-                                <ul class="menu-list">
-                                    <li>
-                                        1 Mì ý
-                                    </li>
-                                    <li>
-                                        1 Popcorn
-                                    </li>
-                                    <li>
-                                        1 Khoai tây chiên(vừa)
-                                    </li>
-                                    <li>
-                                        1 Nước / Milo
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-3">
-                        <div class="promotion-box">
-                            <div class="order-image">
-                                <img src="./images/slide2.jpg" alt="">
-                            </div>
-                            <div class="order-text">
-                                <div class="promotion-name">
-                                    COMBO HAPPY VIP
-                                </div>
-                                <div class="promotion-price">
-                                    99.000đ / người
-                                </div>
-                                <ul class="menu-list">
-                                    <li>
-                                        1 Mì ý
-                                    </li>
-                                    <li>
-                                        1 Popcorn
-                                    </li>
-                                    <li>
-                                        1 Khoai tây chiên(vừa)
-                                    </li>
-                                    <li>
-                                        1 Nước / Milo
-                                    </li>
-                                </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xxl-3">
-                        <div class="promotion-box">
-                            <div class="order-image">
-                                <img src="./images/slide3.jpg" alt="">
-                            </div>
-                            <div class="order-text">
-                                <div class="promotion-name">
-                                    COMBO HAPPY VIP
-                                </div>
-                                <div class="promotion-price">
-                                    99.000đ / người
-                                </div>
-                                <ul class="menu-list">
-                                    <li>
-                                        1 Mì ý
-                                    </li>
-                                    <li>
-                                        1 Popcorn
-                                    </li>
-                                    <li>
-                                        1 Khoai tây chiên(vừa)
-                                    </li>
-                                    <li>
-                                        1 Nước / Milo
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-3">
-                        <div class="promotion-box">
-                            <div class="order-image">
-                                <img src="./images/slide4.jpg" alt="">
-                            </div>
-                            <div class="order-text">
-                                <div class="promotion-name">
-                                    COMBO HAPPY VIP
-                                </div>
-                                <div class="promotion-price">
-                                    99.000đ / người
-                                </div>
-                                <ul class="menu-list">
-                                    <li>
-                                        1 Mì ý
-                                    </li>
-                                    <li>
-                                        1 Popcorn
-                                    </li>
-                                    <li>
-                                        1 Khoai tây chiên(vừa)
-                                    </li>
-                                    <li>
-                                        1 Nước / Milo
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -166,7 +85,7 @@
         <div class="row">
             <div class="col-xxl-12">
                 <div class="party-image">
-                    <img src="/images/birthdaybanner.jpg" alt="">
+                    <img src="assets/images/birthdaybanner.jpg" alt="">
                 </div>
             </div>
         </div>

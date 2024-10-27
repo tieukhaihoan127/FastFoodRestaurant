@@ -30,7 +30,8 @@ namespace FastFoodRestaurant.Models
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeleteDate { get; set; }
         [Required]
-        public Boolean IsActive { get; set; }
-
+        public Boolean Status { get; set; }
+        [Required]
+        public Boolean IsLocked { get; set; }
     }
 }

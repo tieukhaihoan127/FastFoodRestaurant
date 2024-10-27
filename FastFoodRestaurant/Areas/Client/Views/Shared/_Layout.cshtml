@@ -9,11 +9,14 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="https://kenwheeler.github.io/slick/slick/slick-theme.css" />
     <link rel="stylesheet" href="~/assets/css/client.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Home</title>
+    <title>@ViewData["Title"]</title>
 </head>
 
 <body>
@@ -24,20 +27,20 @@
                 <div class="header-cover">
                     <div class="header-menu">
                         <div class="header-brand">
-                            <img src="/images/kfcword.png" alt="">
+                            <img src="/assets/images/kfcword.png" alt="">
                         </div>
                         <ul id="primary">
                             <li>
-                                <a href="/">KHUYẾN MÃI</a>
+                                <a asp-area="Client" asp-controller="Promotion" asp-action="Index">KHUYẾN MÃI</a>
                             </li>
                             <li>
-                                <a href="/">THỰC ĐƠN</a>
+                                <a asp-area="Client" asp-controller="Menu" asp-action="Index">THỰC ĐƠN</a>
                             </li>
                             <li>
-                                <a href="/">CỬA HÀNG</a>
+                                <a asp-area="Client" asp-controller="Store" asp-action="Index">CỬA HÀNG</a>
                             </li>
                             <li>
-                                <a href="/">ĐẶT TIỆC</a>
+                                <a asp-area="Client" asp-controller="Party" asp-action="Index">ĐẶT TIỆC</a>
                             </li>
                         </ul>
                     </div>
@@ -45,7 +48,7 @@
                         <button>Order Now</button>
                         <ul>
                             <li>
-                                <a href="/">
+                                <a asp-area="Client" asp-controller="Cart" asp-action="Index">
                                     <i class="fa-solid fa-cart-shopping icon"></i>
                                 </a>
                             </li>
@@ -165,8 +168,9 @@
     crossorigin="anonymous"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script async defer src="https://maps.gomaps.pro/maps/api/js?key=AlzaSy5Dos38Zq3IEhBZGYuBLAMPWDoWZAb-l1L&callback=initMap&v=weekly&solution_channel=GMP_CCS_customcontrols_v2"></script>
+<script type="text/javascript" src="~/assets/js/map.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="slick/slick.min.js"></script>
 <script type="text/javascript" src="~/assets/js/slick.js"></script>
-<script type="text/javascript" src="~/assets/js/map.js"></script>
 </html>

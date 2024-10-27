@@ -1,128 +1,50 @@
-﻿<div class="order-content">
+﻿@model List<Combo>
+@{
+    var currentPage = ViewData["CurrentPage"] as int?;
+    var totalPages = ViewData["TotalPages"] as int?;
+    ViewData["Title"] = "Ưu đãi";
+}
+
+<div class="order-content">
     <div class="container">
         <div class="row">
-            <div class="col-xxl-3">
-                <div class="promotion-box">
-                    <div class="order-image">
-                        <img src="./images/slide1.jpg" alt="">
-                    </div>
-                    <div class="order-text">
-                        <div class="promotion-name">
-                            LƯƠNG VỀ - COMBO SALE Ê HỀ CHỈ 119K
+            @foreach(var obj in Model)
+            {
+                <div class="col-xxl-3">
+                    <div class="promotion-box">
+                        <div class="order-image">
+                            <img src="@obj.PictureUrl" alt="">
                         </div>
-                        <div class="order-button">
-                            <button>Đặt hàng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3">
-                <div class="promotion-box">
-                    <div class="order-image">
-                        <img src="./images/slide2.jpg" alt="">
-                    </div>
-                    <div class="order-text">
-                        <div class="promotion-name">
-                            LƯƠNG VỀ - COMBO SALE Ê HỀ CHỈ 119K
-                        </div>
-                        <div class="order-button">
-                            <button>Đặt hàng</button>
+                        <div class="order-text">
+                            <div class="promotion-name">
+                                @obj.Name
+                            </div>
+                            <div class="order-button">
+                                <button>Đặt hàng</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xxl-3">
-                <div class="promotion-box">
-                    <div class="order-image">
-                        <img src="./images/slide3.jpg" alt="">
-                    </div>
-                    <div class="order-text">
-                        <div class="promotion-name">
-                            LƯƠNG VỀ - COMBO SALE Ê HỀ CHỈ 119K
-                        </div>
-                        <div class="order-button">
-                            <button>Đặt hàng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3">
-                <div class="promotion-box">
-                    <div class="order-image">
-                        <img src="./images/slide4.jpg" alt="">
-                    </div>
-                    <div class="order-text">
-                        <div class="promotion-name">
-                            LƯƠNG VỀ - COMBO SALE Ê HỀ CHỈ 119K
-                        </div>
-                        <div class="order-button">
-                            <button>Đặt hàng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3">
-                <div class="promotion-box">
-                    <div class="order-image">
-                        <img src="./images/slide1.jpg" alt="">
-                    </div>
-                    <div class="order-text">
-                        <div class="promotion-name">
-                            LƯƠNG VỀ - COMBO SALE Ê HỀ CHỈ 119K
-                        </div>
-                        <div class="order-button">
-                            <button>Đặt hàng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3">
-                <div class="promotion-box">
-                    <div class="order-image">
-                        <img src="./images/slide2.jpg" alt="">
-                    </div>
-                    <div class="order-text">
-                        <div class="promotion-name">
-                            LƯƠNG VỀ - COMBO SALE Ê HỀ CHỈ 119K
-                        </div>
-                        <div class="order-button">
-                            <button>Đặt hàng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3">
-                <div class="promotion-box">
-                    <div class="order-image">
-                        <img src="./images/slide3.jpg" alt="">
-                    </div>
-                    <div class="order-text">
-                        <div class="promotion-name">
-                            LƯƠNG VỀ - COMBO SALE Ê HỀ CHỈ 119K
-                        </div>
-                        <div class="order-button">
-                            <button>Đặt hàng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3">
-                <div class="promotion-box">
-                    <div class="order-image">
-                        <img src="./images/slide4.jpg" alt="">
-                    </div>
-                    <div class="order-text">
-                        <div class="promotion-name">
-                            LƯƠNG VỀ - COMBO SALE Ê HỀ CHỈ 119K
-                        </div>
-                        <div class="order-button">
-                            <button>Đặt hàng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pagination-cover">
+            }
+<div class="pagination-cover">
+    <ul class="pagination">
+        <li class="pagination-item @(currentPage == 1 ? "disabled" : "")">
+            <a href="@Url.Action("Index", new { pageNumber = currentPage - 1 })">Previous</a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="pagination-item @(currentPage == i ? "pg-active" : "")">
+                <a href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+            </li>
+        }
+
+        <li class="pagination-item @(currentPage == totalPages ? "disabled" : "")">
+            <a href="@Url.Action("Index", new { pageNumber = currentPage + 1 })">Next</a>
+        </li>
+    </ul>
+</div>
+@*             <div class="pagination-cover">
             <ul class="pagination">
                 <li class="pagination-item">
                     <a href="#">Previous</a>
@@ -143,6 +65,6 @@
                     <a href="#">Next</a>
                 </li>
             </ul>
-        </div>
+        </div> *@
     </div>
 </div>
