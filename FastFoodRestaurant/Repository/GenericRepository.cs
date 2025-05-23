@@ -38,12 +38,6 @@ namespace FastFoodRestaurant.Repository.IGenericRepository
             return query.ToList();
         }
 
-        public List<CategoryIdName> GetAllIds(Expression<Func<T, CategoryIdName>> filter)
-        {
-            IQueryable<T> query = dbSet;
-            return query.Select(filter).ToList();
-        }
-
         public T getCurrentId(Expression<Func<T, string>> filter)
         {
             IQueryable<T> query = dbSet;

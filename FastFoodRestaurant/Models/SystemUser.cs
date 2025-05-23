@@ -18,7 +18,7 @@ namespace FastFoodRestaurant.Models
         [Required]
         public string Gender { get; set; }
         [Required]
-        public string Password { get; set; }
+        public string? Password { get; set; }
         [Required]
         public string Role { get; set; }
         public string? PictureUrl { get; set; }
@@ -33,5 +33,7 @@ namespace FastFoodRestaurant.Models
         public Boolean Status { get; set; }
         [Required]
         public Boolean IsLocked { get; set; }
+        [Required]
+        public Boolean IsDeleted { get; set; }
     }
 }

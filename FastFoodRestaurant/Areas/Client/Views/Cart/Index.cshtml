@@ -2,11 +2,13 @@
     var toBuyList = ViewData["ToBuyList"] as List<Combo>;
     var suggestList = ViewData["SuggestList"] as List<Menu>;
     var selectedStore = ViewData["SelectedStore"] as Store;
+    var cartList = ViewData["CartList"] as List<CartItem>;
+    var totalPrice = ViewData["TotalPrice"] as double?;
     ViewData["Title"] = "Giỏ hàng";
 }
 
 <div class="container">
-    <form action="">
+    <form id="cartSubmit" asp-area="Client" asp-controller="Cart" asp-action="UpdateBill" method="POST">
         <div class="row">
             <div class="col-xxl-7">
                 <div class="cart-content">
@@ -14,24 +16,24 @@
                         <div class="cart-header-title">
                             <b>GIỎ HÀNG CỦA BẠN</b> (1 SẢN PHẨM)
                         </div>
-                        <button>
+                        <button asp-area="Client" asp-controller="Menu" asp-action="Index">
                             + Thêm món ăn
                         </button>
                     </div>
                     <div class="cart-list">
-                        @foreach(var obj in toBuyList)
+                        @foreach (var obj in cartList)
                         {
                             <div class="cart-list-item">
                                 <div class="cart-list-left">
                                     <a href="">
-                                        <img src="@obj.PictureUrl" alt="">
+                                        <img src="@obj.Menu.PictureUrl" alt="">
                                     </a>
                                     <div class="cart-list-info">
                                         <a class="cart-info-name">
                                             @obj.Name
                                         </a>
                                         <div class="cart-info-desc">
-                                            1 x @obj.Name
+                                            @obj.Quantity x @obj.Name
                                         </div>
                                         <div class="cart-info-price">
                                             @obj.Price.ToString("N0", System.Globalization.CultureInfo.InvariantCulture) đ
@@ -42,18 +44,24 @@
                                     <div class="cart-list-quantity">
                                         <ul>
                                             <li class="minus">
-                                                -
+                                                <form asp-area="Client" asp-controller="Cart" asp-action="UpdateCartMinus" asp-route-id="@obj.CartId" method="POST">
+                                                    <button type="submit" style="border:none; background-color:transparent; color:white;">-</button>
+                                                </form>
                                             </li>
                                             <li class="quantity">
-                                                1
+                                                @obj.Quantity   
                                             </li>
                                             <li class="plus">
-                                                +
+                                                <form asp-area="Client" asp-controller="Cart" asp-action="UpdateCartPlus" asp-route-id="@obj.CartId" method="POST">
+                                                    <button type="submit" style="border:none; background-color:transparent; color:white;">+</button>
+                                                </form>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="cart-info-delete">
-                                        <i class="fa-solid fa-trash"></i>
+                                        <form asp-area="Client" asp-controller="Cart" asp-action="DeleteCartItem" asp-route-id="@obj.CartId" method="POST">
+                                            <button type="submit" style="border:none; background-color:transparent; color:white;"><i class="fa-solid fa-trash"></i></button>
+                                        </form>                       
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +106,7 @@
                     </div>
                     <div class="cart-note">
                         <label for="">Ghi chú cho đơn hàng</label>
-                        <input type="text" placeholder="Vui lòng thêm lưu ý cho cửa hàng">
+                        <input type="text" name="Note" placeholder="Vui lòng thêm lưu ý cho cửa hàng">
                     </div>
                 </div>
             </div>
@@ -109,8 +117,8 @@
                             Giao hàng đến
                         </div>
                         <div class="cart-add">
-                            <div class="cart-address">
-                                123 Nguyễn Thị Thập P12 Quan 7, Ho Chi Minh
+                            <div class="cart-address" style="width:100%; flex:1;">
+                                <input type="text" name="Address" value="123 Nguyễn Thị Thập P12 Quan 7, Ho Chi Minh" style="outline:none; width:90%; border:none;" />
                             </div>
                             <div class="cart-address-edit">
                                 <i class="fa-regular fa-pen-to-square"></i>
@@ -144,20 +152,27 @@
                         </ul>
                     </div>
                     <div class="cart-submit">
+                        <div class="cart-user-info" style="display:flex; align-items:center; flex-direction:column;">
+                            <input type="text" name="ClientName" placeholder="Nhập tên khách hàng" style="width:100%; margin-top:10px; margin-bottom:10px; outline:none; padding:15px; border:none;"/>
+                            <input type="text" name="ClientPhoneNumber" placeholder="Nhập số điện thoại" style="width:100%; margin-top:10px; margin-bottom:10px; outline:none; padding:15px; border:none;" />
+                            <input type="text" name="ClientEmail" placeholder="Nhập email" style="width:100%; margin-top:10px; margin-bottom:10px; outline:none; padding:15px; border:none;" />
+                        </div>
                         <div class="cart-total">
                             <div class="cart-text">
                                 Tổng cộng
                             </div>
                             <div class="cart-total-price">
-                                145.000 đ
+                                <input type="hidden" name="TotalPrice" value="@totalPrice" />
+                                @totalPrice đ
                             </div>
                         </div>
-                        <div class="cart-button">
+                        <button type="submit" class="cart-button" style="border:none; width:100%;">
                             Tiếp tục
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+

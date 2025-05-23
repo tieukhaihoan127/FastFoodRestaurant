@@ -1,0 +1,106 @@
+﻿@model List<SystemUser>
+@{
+    var currentPage = ViewData["CurrentPage"] as int?;
+    var totalPages = ViewData["TotalPages"] as int?;
+    ViewData["Title"] = "Danh sách nhân viên đã xóa";
+}
+
+<div class="page-title">
+    Quản lý nhân viên
+</div>
+<div class="d-sm-flex align-items-center justify-content-between">
+    <div class="btn-wrapper">
+        <a asp-controller="SystemUser" asp-action="Index" class="btn btn-primary text-white plus"><i class="fa-solid fa-arrow-left"></i>Trở về</a>
+        <a class="btn btn-success text-white delete-multi" id="reload-multi"><i class="fa-solid fa-rotate-right"></i> Khôi phục</a>
+    </div>
+    <form class="filter" method="POST">
+        <input type="text" placeholder="Filter mã nhân viên" name="object_id">
+        <input type="text" placeholder="Filter số điện thoại" name="object_name">
+        <button type="submit" id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+
+    </form>
+</div>
+<div class="table-sorter-wrapper">
+    <table id="myTable" class="table table-hover">
+        <thead>
+            <tr>
+                <th class="sortStyle"><input type="checkbox" name="checkboxInputAll"></th>
+                <th class="sortStyle">Mã nhân viên</th>
+                <th class="sortStyle">Thông tin cá nhân</th>
+                <th class="sortStyle">Email</th>
+                <th class="sortStyle">Tài khoản</th>
+                <th class="sortStyle">Tình trạng</th>
+                <th class="sortStyle"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="checkboxInputId" data-id="@obj.UserId">
+                    </td>
+                    <td>@obj.UserId</td>
+                    <td>
+                        <div class="contact" id="contact">
+                            <img src="@obj.PictureUrl" alt="">
+                            <div class="user-title">
+                                <div class="name">@obj.Name</div>
+                                <div class="phone">@obj.PhoneNumber</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@obj.Email</td>
+                    <td>
+                        @if (obj.IsLocked == true)
+                        {
+                            <button type="button" class="btn btn-success" data-id="@obj.UserId" id="lock">Mở Khóa</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-danger" data-id="@obj.UserId" id="lock">Khóa</button>
+                        }
+                    </td>
+                    <td>
+                        @if (obj.Status == true)
+                        {
+                            <button type="button" class="btn btn-success">Đang hoạt động</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-danger">Dừng hoạt động</button>
+                        }
+                    </td>
+                    <td>
+                        <div class="function">
+                            <a asp-controller="SystemUser" asp-action="Edit" asp-route-id="@obj.UserId" class="edit">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a data-id="@obj.UserId" id="reload">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="pagination-item">
+    <ul class="pagination">
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage - 1 })">Previous</a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(currentPage == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = currentPage + 1 })">Next</a>
+        </li>
+    </ul>
+</div>

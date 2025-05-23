@@ -1,0 +1,85 @@
+﻿@{
+    var currentId = ViewData["CurrentId"] as string;
+    ViewData["Title"] = "Tạo chi nhánh";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Thông tin cửa hàng</h2>
+        <div class="create-info">Người tạo: Nguyễn Văn B</div>
+        <form class="forms-sample" asp-controller="Store" asp-action="Create" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label for="input">Mã cửa hàng</label>
+                        <input type="text" required="required" class="form-control" readonly
+                               name="StoreId" value="@currentId" placeholder="Mã cửa hàng">
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label for="input">Tên cửa hàng</label>
+                        <input type="text" required="required" class="form-control"
+                               name="Name" placeholder="Tên cửa hàng">
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label for="input">Số điện thoại</label>
+                        <input type="text" required="required" class="form-control"
+                               name="Hotline" placeholder="Số điện thoại">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label>Thành phố</label>
+                        <select class="choose city" name="City">
+                            <option value="" disabled selected>--Select City--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label>Quận/huyện/thị xã</label>
+                        <select class="choose district" name="District">
+                            <option value="" disabled selected>--Select District--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label>Phường/Xã</label>
+                        <select class="choose ward" name="Ward">
+                            <option value="" disabled selected>--Select Ward--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Địa chỉ</label>
+                        <input type="text" required="required" class="form-control"
+                               name="Address" placeholder="Địa chỉ">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Giờ mở cửa</label>
+                        <input type="time" required="required" class="form-control"
+                               name="OpeningHour" placeholder="Giờ mở cửa">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Giờ đóng cửa</label>
+                        <input type="time" required="required" class="form-control"
+                               name="ClosingTime" placeholder="Giờ đóng cửa">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <a class="btn btn-light" id="cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

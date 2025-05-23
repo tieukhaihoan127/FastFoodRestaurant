@@ -1,4 +1,5 @@
-﻿using FastFoodRestaurant.Models;
+﻿using FastFoodRestaurant.DTO;
+using FastFoodRestaurant.Models;
 using System.Linq.Expressions;
 
 namespace FastFoodRestaurant.Repository.IGenericRepository
@@ -8,6 +9,7 @@ namespace FastFoodRestaurant.Repository.IGenericRepository
         IEnumerable<Menu> GetIncludeCategoryAll();
         IEnumerable<Menu> GetIncludeCategoryAllExpression(Expression<Func<Menu, bool>> filter);
         Menu GetSingleMenuWithCategory(Expression<Func<Menu, bool>> filter);
+        List<MenuInfo> GetAll(Expression<Func<Menu, MenuInfo>> filter);
         List<Category> GetUniqueCategory();
         void Update(Menu obj);
         void Save();

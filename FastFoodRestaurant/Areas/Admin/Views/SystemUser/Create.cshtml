@@ -1,0 +1,100 @@
+﻿@{
+    var currentId = ViewData["CurrentId"] as string;
+    var storesList = ViewData["StoresList"] as List<StoreIdName>;
+    ViewData["Title"] = "Tạo tài khoản";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Thông tin nhân viên</h2>
+        <div class="create-info">Thời gian tạo: 07/10/2024</div>
+        <form class="forms-sample" asp-area="Admin" asp-controller="SystemUser" asp-action="Create" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Mã nhân viên</label>
+                        <input type="text" required="required" class="form-control"
+                               name="UserId" value="@currentId" placeholder="Mã đơn hàng">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Tên nhân viên</label>
+                        <input type="text" required="required" class="form-control"
+                               name="Name" placeholder="Tên nhân viên">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Số điện thoại</label>
+                        <input type="text" required="required" class="form-control"
+                               name="PhoneNumber" placeholder="Số điện thoại">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Email</label>
+                        <input type="email" required="required" class="form-control"
+                               name="Email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label>Giới tính</label>
+                        <select class="choose" name="Gender">
+                            <option value="" disabled selected>--Select Gender--</option>
+                            <option value="Nam  ">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Ngày sinh</label>
+                        <input type="date" required="required" class="form-control"
+                               name="DOB" placeholder="Nhập ngày sinh">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label>Vai trò</label>
+                        <select class="choose" name="Role">
+                            <option value="" disabled selected>--Select Role--</option>
+                            <option value="ADMIN               ">Admin</option>
+                            <option value="Staff">Nhân viên bán hàng</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label>Chi nhánh</label>
+                        <select class="choose" name="StoreId">
+                            <option value="" disabled selected>--Select Store--</option>
+                            @foreach (var item in storesList)
+                            {
+                                <option value="@item.StoreId">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Hình ảnh cá nhân</label>
+                        <input type="file" name="pictureFile" id="fileInput" class="file-upload-default" accept="image/*">
+                        <div class="input-group col-xs-12">
+                            <input type="text" class="form-control file-upload-info" disabled="" placeholder="Tải hình ảnh lên...">
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button" onclick="document.getElementById('fileInput').click();" style=" margin-right: 0;">Upload</button>
+                            </span>
+                        </div>
+                        <img src="temp" class="image-preview" />
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <a class="btn btn-light" id="cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

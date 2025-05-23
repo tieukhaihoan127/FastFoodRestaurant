@@ -37,5 +37,29 @@ namespace FastFoodRestaurant.Areas.Client.Controllers
 
             return View();
         }
+
+        public IActionResult DetailCategory(string id)
+        {
+            List<Category> categoryList;
+            List<Category> currentCategory;
+            List<Combo> comboList;
+            List<Menu> menuList;
+            List<Category> menuContainCategoryList;
+
+            currentCategory = _categoryRepo.GetAllExpression(c => c.CategoryId == id).ToList();
+            categoryList = _categoryRepo.GetAll().ToList();
+            comboList = _comboRepo.GetAll().ToList();
+            menuList = _menuRepo.GetIncludeCategoryAll().ToList();
+            menuContainCategoryList = _menuRepo.GetUniqueCategory();
+
+
+            ViewData["CategoryList"] = categoryList;
+            ViewData["ComboList"] = comboList;
+            ViewData["MenuList"] = menuList;
+            ViewData["UniqueCategory"] = menuContainCategoryList;
+            ViewData["CurrentCategory"] = currentCategory;
+
+            return View();
+        }
     }
 }

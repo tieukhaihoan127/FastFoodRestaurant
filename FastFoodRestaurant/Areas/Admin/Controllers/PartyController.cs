@@ -43,5 +43,10 @@ namespace FastFoodRestaurant.Controllers
 
             return View(pagedPartiesList);
         }
+
+        public IActionResult Edit(string id)
+        {
+            return View();
+        }
     }
 }

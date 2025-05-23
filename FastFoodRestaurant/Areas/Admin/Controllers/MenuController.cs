@@ -24,22 +24,58 @@ namespace FastFoodRestaurant.Controllers
             var account = new Account("dwdhkwu0r", "182449369914218", "d1gJYHWsz6Rz9wFmFD9S6kYtka4");
             _cloudinary = new Cloudinary(account);
         }
-        public IActionResult Index(string? keyword, string? name, int pageNumber = 1)
+        public IActionResult Index(int pageNumber = 1)
         {
             List<Menu> menusList;
             string[] categoryIdList = new string[pageSize];
+            var categoriesList = _categoryRepo.GetAllIds(c => new CategoryIdName
+            {
+                CategoryId = c.CategoryId.Trim(),
+                Name = c.Name
+            });
 
-            if (!string.IsNullOrEmpty(keyword) && !string.IsNullOrEmpty(name))
+            menusList = _menuRepo.GetIncludeCategoryAll().ToList();
+
+            var pagedMenuList = menusList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            foreach (var obj in menusList)
             {
-                menusList = _menuRepo.GetIncludeCategoryAllExpression(m => m.MenuId == keyword && m.Name == name).ToList();
+                obj.MenuId = obj.MenuId.Trim();
             }
-            else if (!string.IsNullOrEmpty(keyword))
+
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["CategoryList"] = categoriesList;
+            ViewData["TotalPages"] = (int)Math.Ceiling(menusList.Count() / (double)pageSize);
+
+            return View(pagedMenuList);
+        }
+
+        [HttpPost]
+        public IActionResult Index(string? object_id, string? object_name, string? CategoryId, int pageNumber = 1)
+        {
+            List<Menu> menusList;
+            string[] categoryIdList = new string[pageSize];
+            var categoriesList = _categoryRepo.GetAllIds(c => new CategoryIdName
             {
-                menusList = _menuRepo.GetIncludeCategoryAllExpression(c => c.MenuId == keyword).ToList();
+                CategoryId = c.CategoryId.Trim(),
+                Name = c.Name
+            });
+
+            if (!string.IsNullOrEmpty(object_id) && !string.IsNullOrEmpty(object_name))
+            {
+                menusList = _menuRepo.GetIncludeCategoryAllExpression(m => m.MenuId == object_id && m.Name == object_name).ToList();
             }
-            else if (!string.IsNullOrEmpty(name))
+            else if (!string.IsNullOrEmpty(object_id))
             {
-                menusList = _menuRepo.GetIncludeCategoryAllExpression(c => c.Name == name).ToList();
+                menusList = _menuRepo.GetIncludeCategoryAllExpression(c => c.MenuId == object_id).ToList();
+            }
+            else if (!string.IsNullOrEmpty(object_name))
+            {
+                menusList = _menuRepo.GetIncludeCategoryAllExpression(c => c.Name == object_name).ToList();
+            }
+            else if (!string.IsNullOrEmpty(CategoryId))
+            {
+                menusList = _menuRepo.GetIncludeCategoryAllExpression(c => c.CategoryId == CategoryId).ToList();
             }
             else
             {
@@ -47,14 +83,19 @@ namespace FastFoodRestaurant.Controllers
             }
 
             var pagedMenuList = menusList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            foreach (var obj in menusList)
+            {
+                obj.MenuId = obj.MenuId.Trim();
+            }
 
             ViewData["CurrentPage"] = pageNumber;
+            ViewData["CategoryList"] = categoriesList;
             ViewData["TotalPages"] = (int)Math.Ceiling(menusList.Count() / (double)pageSize);
 
             return View(pagedMenuList);
         }
 
-        public ActionResult Create() 
+        public IActionResult Create() 
         {
             var categoriesList = _categoryRepo.GetAllIds(c => new CategoryIdName
             {
@@ -114,15 +155,16 @@ namespace FastFoodRestaurant.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Menu obj, IFormFile pictureFile)
+        public IActionResult Create(Menu obj, IFormFile pictureFile)
         {
-            obj.MenuId = obj.MenuId?.Trim();
+            List<Menu> menusList = _menuRepo.GetIncludeCategoryAll().ToList();
+
             if (pictureFile != null && pictureFile.Length > 0)
             {
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new FileDescription(pictureFile.FileName, pictureFile.OpenReadStream()),
-                    PublicId = obj.MenuId
+                    PublicId = obj.MenuId.Trim()
                 };
 
                 var uploadResult = _cloudinary.Upload(uploadParams);
@@ -135,7 +177,9 @@ namespace FastFoodRestaurant.Controllers
 
             _menuRepo.Add(obj);
             _menuRepo.Save();
-            return RedirectToAction("Index");
+            int cnt = menusList.Count() + 1;
+            int totalPages = (int)Math.Ceiling(cnt / (double)pageSize);
+            return RedirectToAction("Index", new { pageNumber = totalPages });
         }
 
         [HttpGet]
@@ -152,9 +196,8 @@ namespace FastFoodRestaurant.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(Menu obj, IFormFile? pictureFile) 
+        public IActionResult Edit(Menu obj, IFormFile? pictureFile) 
         {
-            obj.MenuId = obj.MenuId?.Trim();
             var existingCategory = _menuRepo.Get(m => m.MenuId == obj.MenuId);
 
             if (existingCategory == null)
@@ -167,7 +210,7 @@ namespace FastFoodRestaurant.Controllers
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new FileDescription(pictureFile.FileName, pictureFile.OpenReadStream()),
-                    PublicId = obj.MenuId
+                    PublicId = obj.MenuId.Trim()
                 };
 
                 var uploadResult = _cloudinary.Upload(uploadParams);

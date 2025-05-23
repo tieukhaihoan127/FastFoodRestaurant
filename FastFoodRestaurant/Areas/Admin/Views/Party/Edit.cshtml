@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "Chỉnh sửa đơn tiệc";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Thông tin đặt tiệc</h2>
+        <div class="create-info">Thời gian tạo: 07/10/2024</div>
+        <form class="forms-sample">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Mã tiệc</label>
+                        <input type="text" required="required" class="form-control"
+                               name="id" value="PT00000000001" placeholder="Mã tiệc">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Tên chủ tiệc</label>
+                        <input type="text" required="required" class="form-control"
+                               name="partyName" value="Nguyễn An"
+                               placeholder="Tên chủ tiệc">
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label for="input">Tên người đặt</label>
+                        <input type="text" required="required" class="form-control"
+                               name="clientName" value="Đại Văn Vinh"
+                               placeholder="Tên người đặt">
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label for="input">Số điện thoại</label>
+                        <input type="text" required="required" class="form-control"
+                               name="phone" value="0903813706" placeholder="Số điện thoại">
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="form-group">
+                        <label for="input">Email</label>
+                        <input type="email" required="required" class="form-control"
+                               name="email" value="honahoan127@gmail.com"
+                               placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Số người tham dự</label>
+                        <input type="text" required="required" class="form-control"
+                               name="participants" value="20" placeholder="Số người tham dự">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label>Loại tiệc</label>
+                        <select class="choose">
+                            <option value="" disabled selected>--Select Type--</option>
+                            <option value="male">Tiệc Sinh Nhật</option>
+                            <option value="female">Tiệc Liên Hoan</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Thời gian tổ chức</label>
+                        <input type="datetime-local" required="required" class="form-control"
+                               name="closingTime" placeholder="Thời gian tổ chức">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label>Địa điểm</label>
+                        <select class="choose">
+                            <option value="" disabled selected>--Select Store--</option>
+                            <option value="male">Chicken Spicy Q11</option>
+                            <option value="female">Chicken Spicy Q12</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label for="textarea">Ghi chú</label>
+                        <textarea type="text" required="required" class="form-control"
+                                  name="note" value=""></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <button class="btn btn-light">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -21,21 +21,41 @@ namespace FastFoodRestaurant.Controllers
             var account = new Account("dwdhkwu0r", "182449369914218", "d1gJYHWsz6Rz9wFmFD9S6kYtka4");
             _cloudinary = new Cloudinary(account);
         }
-        public IActionResult Index(string? keyword,string? name,int pageNumber = 1)
+        public IActionResult Index(int pageNumber = 1)
         {
             List<Category> categoriesList;
 
-            if (!string.IsNullOrEmpty(keyword) && !string.IsNullOrEmpty(name))
+            categoriesList = _categoryRepo.GetAll().ToList();
+
+            var pagedCateogryList = categoriesList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            foreach (var obj in pagedCateogryList)
             {
-                categoriesList = _categoryRepo.GetAllExpression(c => c.CategoryId == keyword && c.Name == name).ToList();
+                obj.CategoryId = obj.CategoryId.Trim();
             }
-            else if (!string.IsNullOrEmpty(keyword))
+
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["TotalPages"] = (int)Math.Ceiling(categoriesList.Count() / (double)pageSize);
+
+            return View(pagedCateogryList);
+        }
+
+        [HttpPost]
+        public IActionResult Index(String? object_id, String? object_name, int pageNumber = 1)
+        {
+            List<Category> categoriesList;
+
+            if (!string.IsNullOrEmpty(object_id) && !string.IsNullOrEmpty(object_name))
             {
-                categoriesList = _categoryRepo.GetAllExpression(c => c.CategoryId == keyword).ToList();
+                categoriesList = _categoryRepo.GetAllExpression(c => c.CategoryId == object_id && c.Name == object_name).ToList();
             }
-            else if(!string.IsNullOrEmpty(name))
+            else if (!string.IsNullOrEmpty(object_id))
             {
-                categoriesList = _categoryRepo.GetAllExpression(c => c.Name == name).ToList();
+                categoriesList = _categoryRepo.GetAllExpression(c => c.CategoryId == object_id).ToList();
+            }
+            else if(!string.IsNullOrEmpty(object_name))
+            {
+                categoriesList = _categoryRepo.GetAllExpression(c => c.Name == object_name).ToList();
             }
             else
             {
@@ -43,6 +63,10 @@ namespace FastFoodRestaurant.Controllers
             }
 
             var pagedCateogryList = categoriesList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            foreach (var obj in pagedCateogryList)
+            {
+                obj.CategoryId = obj.CategoryId.Trim();
+            }
 
             ViewData["CurrentPage"] = pageNumber;
             ViewData["TotalPages"] = (int)Math.Ceiling(categoriesList.Count() / (double)pageSize);
@@ -113,7 +137,7 @@ namespace FastFoodRestaurant.Controllers
         [HttpPost] 
         public IActionResult Create(Category obj, IFormFile pictureFile)
         {
-            obj.CategoryId = obj.CategoryId?.Trim();
+            List<Category> categoriesList = _categoryRepo.GetAll().ToList();
             if (pictureFile != null && pictureFile.Length > 0)
             {
                 var uploadParams = new ImageUploadParams()
@@ -132,18 +156,20 @@ namespace FastFoodRestaurant.Controllers
 
             _categoryRepo.Add(obj);
             _categoryRepo.Save();
-            return RedirectToAction("Index");
+            int cnt = categoriesList.Count() + 1;
+            int totalPages = (int)Math.Ceiling(cnt / (double)pageSize);
+            return RedirectToAction("Index", new {pageNumber = totalPages });
         }
 
         [HttpPost]
-        public IActionResult Update(Category obj, IFormFile? pictureFile)
+        public IActionResult Edit(Category obj, IFormFile? pictureFile)
         {
-            obj.CategoryId = obj.CategoryId?.Trim();
             var existingCategory = _categoryRepo.Get(c => c.CategoryId == obj.CategoryId);
 
             if (existingCategory == null)
             {
-                return NotFound(); 
+                ModelState.AddModelError("", "Danh mục không tồn tại.");
+                return View(obj);
             }
 
             if (pictureFile != null && pictureFile.Length > 0)
@@ -151,7 +177,7 @@ namespace FastFoodRestaurant.Controllers
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new FileDescription(pictureFile.FileName, pictureFile.OpenReadStream()),
-                    PublicId = obj.CategoryId 
+                    PublicId = obj.CategoryId.Trim()
                 };
 
                 var uploadResult = _cloudinary.Upload(uploadParams);

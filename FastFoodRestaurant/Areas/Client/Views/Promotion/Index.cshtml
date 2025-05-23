@@ -26,45 +26,23 @@
                     </div>
                 </div>
             }
-<div class="pagination-cover">
-    <ul class="pagination">
-        <li class="pagination-item @(currentPage == 1 ? "disabled" : "")">
-            <a href="@Url.Action("Index", new { pageNumber = currentPage - 1 })">Previous</a>
-        </li>
-
-        @for (int i = 1; i <= totalPages; i++)
-        {
-            <li class="pagination-item @(currentPage == i ? "pg-active" : "")">
-                <a href="@Url.Action("Index", new { pageNumber = i })">@i</a>
-            </li>
-        }
-
-        <li class="pagination-item @(currentPage == totalPages ? "disabled" : "")">
-            <a href="@Url.Action("Index", new { pageNumber = currentPage + 1 })">Next</a>
-        </li>
-    </ul>
-</div>
-@*             <div class="pagination-cover">
+        <div class="pagination-cover">
             <ul class="pagination">
-                <li class="pagination-item">
-                    <a href="#">Previous</a>
+                <li class="pagination-item @(currentPage == 1 ? "disabled" : "")">
+                    <a href="@Url.Action("Index", new { pageNumber = currentPage - 1 })">Previous</a>
                 </li>
-                <li class="pagination-item pg-active">
-                    <a href="#">1</a>
-                </li>
-                <li class="pagination-item">
-                    <a href="#">2</a>
-                </li>
-                <li class="pagination-item">
-                    <a href="#">3</a>
-                </li>
-                <li class="pagination-item">
-                    <a href="#">4</a>
-                </li>
-                <li class="pagination-item">
-                    <a href="#">Next</a>
+
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="pagination-item @(currentPage == i ? "pg-active" : "")">
+                        <a href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                    </li>
+                }
+
+                <li class="pagination-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a href="@Url.Action("Index", new { pageNumber = currentPage + 1 })">Next</a>
                 </li>
             </ul>
-        </div> *@
+        </div>
     </div>
 </div>

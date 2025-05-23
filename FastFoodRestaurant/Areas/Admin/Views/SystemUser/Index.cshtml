@@ -10,23 +10,22 @@
 </div>
 <div class="d-sm-flex align-items-center justify-content-between">
     <div class="btn-wrapper">
-        <div class="select">
-            <select class="choose">
+        <form class="select" method="POST">
+            <select class="choose" name="status" id="dropdown">
                 <option value="" disabled selected>Tình trạng</option>
-                <option value="1">Đơn hàng mới</option>
-                <option value="2">Đang chuẩn bị</option>
-                <option value="3">Đã hoàn thành</option>
+                <option value="True">Đang hoạt động</option>
+                <option value="False">Dừng hoạt động</option>
             </select>
-        </div>
+        </form>
         <a asp-controller="SystemUser" asp-action="Create" class="btn btn-success text-white plus"><i class="fa-solid fa-plus"></i> Thêm</a>
         <a class="btn btn-danger text-white delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
     </div>
-    <div class="filter">
-        <input type="text" placeholder="Filter mã nhân viên" name="object-id">
-        <input type="text" placeholder="Filter số điện thoại" name="object-name">
-        <a id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a>
-        <a class="btn btn-danger text-white list"><i class="fa-solid fa-list"></i> Danh sách xóa</a>
-    </div>
+    <form class="filter" method="POST">
+        <input type="text" placeholder="Filter mã nhân viên" name="object_id">
+        <input type="text" placeholder="Filter số điện thoại" name="object_name">
+        <button type="submit" id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+        <a asp-controller="SystemUser" asp-action="RecycleBin" class="btn btn-danger text-white list"><i class="fa-solid fa-list"></i> Danh sách xóa</a>
+    </form>
 </div>
 <div class="table-sorter-wrapper">
     <table id="myTable" class="table table-hover">
@@ -51,24 +50,27 @@
                     </td>
                     <td>@obj.UserId</td>
                     <td>
-                        <div class="contact">
-                            <div class="name">@obj.Name</div>
-                            <div class="phone">@obj.PhoneNumber</div>
+                        <div class="contact" id="contact">
+                            <img src="@obj.PictureUrl" alt="">
+                            <div class="user-title">
+                                <div class="name">@obj.Name</div>
+                                <div class="phone">@obj.PhoneNumber</div>
+                            </div>
                         </div>
                     </td>
                     <td>@obj.Email</td>
                     <td>
-                        @if(obj.IsLocked)
+                        @if(obj.IsLocked == true)
                         {
-                            <button type="button" class="btn btn-danger">Khóa</button>
+                            <button type="button" class="btn btn-success" data-id="@obj.UserId" id="lock">Mở Khóa</button>
                         }
                         else
                         {
-                            <button type="button" class="btn btn-success">Mở Khóa</button>
+                            <button type="button" class="btn btn-danger" data-id="@obj.UserId" id="lock">Khóa</button>
                         }
                     </td>
                     <td>
-                        @if(obj.Status)
+                        @if(obj.Status == true)
                         {
                             <button type="button" class="btn btn-success">Đang hoạt động</button>
                         }

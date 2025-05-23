@@ -19,13 +19,43 @@ namespace FastFoodRestaurant.Controllers
             _voucherRepo = voucherRepo;
         }
 
-        public IActionResult Index(string? keyword, int pageNumber = 1)
+        public IActionResult Index(int pageNumber = 1)
+        {
+            List<Voucher> vouchersList;
+            vouchersList = _voucherRepo.GetAll().ToList();
+
+            var pagedVouchersList = vouchersList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            foreach (var obj in pagedVouchersList)
+            {
+                obj.VoucherId = obj.VoucherId.Trim();
+            }
+
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["TotalPages"] = (int)Math.Ceiling(vouchersList.Count() / (double)pageSize);
+
+            return View(pagedVouchersList);
+        }
+
+        [HttpPost]
+        public IActionResult Index(string? object_id, Boolean? status, int pageNumber = 1)
         {
             List<Voucher> vouchersList;
 
-            if (!string.IsNullOrEmpty(keyword))
+            if (!string.IsNullOrEmpty(object_id))
             {
-                vouchersList = _voucherRepo.GetAllExpression(v => v.VoucherId == keyword).ToList();
+                vouchersList = _voucherRepo.GetAllExpression(v => v.VoucherId == object_id).ToList();
+            }
+            else if (status.HasValue)
+            {
+                if(status == false)
+                {
+                    vouchersList = _voucherRepo.GetAllExpression(v => v.Status == false).ToList();
+                }
+                else
+                {
+                    vouchersList = _voucherRepo.GetAllExpression(v => v.Status == true).ToList();
+                }
             }
             else
             {
@@ -33,6 +63,11 @@ namespace FastFoodRestaurant.Controllers
             }
 
             var pagedVouchersList = vouchersList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            foreach (var obj in pagedVouchersList)
+            {
+                obj.VoucherId = obj.VoucherId.Trim();
+            }
 
             ViewData["CurrentPage"] = pageNumber;
             ViewData["TotalPages"] = (int)Math.Ceiling(vouchersList.Count() / (double)pageSize);
@@ -104,16 +139,24 @@ namespace FastFoodRestaurant.Controllers
         [HttpPost]
         public IActionResult Create(Voucher obj)
         {
+            List<Voucher> vouchersList = _voucherRepo.GetAll().ToList();
             _voucherRepo.Add(obj);
             _voucherRepo.Save();
-            return RedirectToAction("Index");
+            int cnt = vouchersList.Count() + 1;
+            int totalPages = (int)Math.Ceiling(cnt / (double)pageSize);
+            return RedirectToAction("Index", new { pageNumber = totalPages });
         }
 
         [HttpPost]
-        public IActionResult Update(Voucher obj)
+        public IActionResult Edit(Voucher obj)
         {
-            obj.VoucherId = obj.VoucherId?.Trim();
             var existingVoucher = _voucherRepo.Get(v => v.VoucherId == obj.VoucherId);
+
+            if (existingVoucher == null)
+            {
+                ModelState.AddModelError("", "Danh mục không tồn tại.");
+                return View(obj);
+            }
 
             if (existingVoucher == null)
             {

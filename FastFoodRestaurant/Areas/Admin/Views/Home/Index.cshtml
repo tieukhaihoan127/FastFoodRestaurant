@@ -84,7 +84,7 @@
             <div class="down">Đơn hàng gần đây của cửa hàng</div>
         </div>
         <div class="all">
-            <button type="button" class="btn btn-primary">Tất cả <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            <a asp-area="Admin" asp-controller="Bill" asp-action="Index" class="btn btn-primary">Tất cả <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
         </div>
     </div>
     <div class="table-sorter-wrapper">
@@ -114,7 +114,7 @@
                         <td>@obj.TotalPrice đ</td>
                         <td>
                             <div class="payment">
-                                @if (obj.PaymentStatus)
+                                @if (obj.PaymentStatus == false)
                                 {
                                     <div class="status">Chưa thanh toán <i class="fa-solid fa-circle-check"></i></div>
                                 }

@@ -1,4 +1,5 @@
 ﻿using FastFoodRestaurant.Data;
+using FastFoodRestaurant.DTO;
 using FastFoodRestaurant.Models;
 using FastFoodRestaurant.Repository.IGenericRepository;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,12 @@ namespace FastFoodRestaurant.Repository
         public IEnumerable<Menu> GetIncludeCategoryAll()
         {
             return _db.Menus.Include(m => m.Category).ToList();
+        }
+
+        public List<MenuInfo> GetAll(Expression<Func<Menu, MenuInfo>> filter)
+        {
+            IQueryable<Menu> query = dbSet;
+            return query.Select(filter).ToList();
         }
 
         public IEnumerable<Menu> GetIncludeCategoryAllExpression(Expression<Func<Menu, bool>> filter)

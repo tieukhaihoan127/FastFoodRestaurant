@@ -1,0 +1,115 @@
+﻿@model Bill
+@{
+    var userList = ViewData["UserList"] as List<UserIdName>;
+    var creatorName = userList?.FirstOrDefault(obj => obj.UserId == Model.UserId)?.Name ?? "Không xác định";
+    ViewData["Title"] = "Chỉnh sửa đơn hàng";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Thông tin đơn hàng</h2>
+        <div class="create-info">Người tạo: @creatorName</div>
+        <form class="forms-sample" asp-area="Admin" asp-controller="Bill" asp-action="Edit" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group"> 
+                        <label for="input">Mã đơn hàng</label>
+                        <input type="text" required="required" class="form-control"
+                               name="BillId" value="@Model.BillId" placeholder="Mã đơn hàng">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Tên khách hàng</label>
+                        <input type="text" required="required" class="form-control"
+                               name="ClientName" value="@Model.ClientName"
+                               placeholder="Tên khách hàng">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Số điện thoại</label>
+                        <input type="text" required="required" class="form-control"
+                               name="ClientPhoneNumber" value="@Model.ClientPhoneNumber" placeholder="Số điện thoại">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Email</label>
+                        <input type="email" required="required" class="form-control"
+                               name="ClientEmail" value="@Model.ClientEmail"
+                               placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Tổng tiền</label>
+                        <input type="text" required="required" class="form-control"
+                               name="TotalPrice" value="@Model.TotalPrice.ToString("N0", System.Globalization.CultureInfo.InvariantCulture)" placeholder="Tổng tiền">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="select">
+                        <label for="select">Trạng thái</label>
+                        <select class="choose" name="Status">
+                            <option value="" disabled>--Select Status--</option>
+                            @if (Model.Status == 1)
+                            {
+                                <option value="1" selected>Đơn hàng mới</option>
+                                <option value="2">Đang chuẩn bị</option>
+                                <option value="3">Đã hoàn thành</option>
+                            }
+                            else if (Model.Status == 2)
+                            {
+                                <option value="1">Đơn hàng mới</option>
+                                <option value="2" selected>Đang chuẩn bị</option>
+                                <option value="3">Đã hoàn thành</option>
+                            }
+                            else
+                            {
+                                <option value="1">Đơn hàng mới</option>
+                                <option value="2">Đang chuẩn bị</option>
+                                <option value="3" selected>Đã hoàn thành</option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Shipping Date</label>
+                        <input type="date" required="required" class="form-control"
+                               name="ShippingDate" value="@Model.ShippingDate.ToString("yyyy-dd-MM")"
+                               placeholder="Shipping Date">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label for="input">Phương thức thanh toán</label>
+                        <input type="text" class="form-control"
+                               name="PaymentMethod" value="@Model.PaymentMethod"
+                               placeholder="Phương thức thanh toán">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="textarea">Nội dung</label>
+                        <textarea type="text" required="required" class="form-control"
+                                  name="detail"></textarea>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="textarea">Ghi chú</label>
+                        <textarea type="text" required="required" class="form-control"
+                                  name="Note">@Model.Note</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <a class="btn btn-light" id="cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

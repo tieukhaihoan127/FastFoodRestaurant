@@ -1,6 +1,8 @@
 ﻿using FastFoodRestaurant.Data;
+using FastFoodRestaurant.DTO;
 using FastFoodRestaurant.Models;
 using FastFoodRestaurant.Repository.IGenericRepository;
+using System.Linq.Expressions;
 
 
 namespace FastFoodRestaurant.Repository
@@ -17,6 +19,12 @@ namespace FastFoodRestaurant.Repository
         {
             var singleItem = _db.Stores.Where(filter).FirstOrDefault();
             return singleItem;
+        }
+
+        public List<StoreIdName> GetAllIds(Expression<Func<Store, StoreIdName>> filter)
+        {
+            IQueryable<Store> query = dbSet;
+            return query.Select(filter).ToList();
         }
 
         public void Save()

@@ -7,7 +7,6 @@ namespace FastFoodRestaurant.Repository.IGenericRepository
     {
         IEnumerable<T> GetAll();
         IEnumerable<T> GetAllExpression(Expression<Func<T, bool>> filter);
-        List<CategoryIdName> GetAllIds(Expression<Func<T, CategoryIdName>> filter);
         T Get(Expression<Func<T,bool>> filter);
         T getCurrentId(Expression<Func<T, string>> filter);
         void Add(T entity);

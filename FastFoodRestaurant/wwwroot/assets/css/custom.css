@@ -170,6 +170,18 @@
             overflow: hidden;
         }
 
+            .main-panel .content-wrapper .home-tab .table-sorter-wrapper table tbody tr td #contact {
+                display:flex;
+                align-items:center;
+            }
+
+            .main-panel .content-wrapper .home-tab .table-sorter-wrapper table tbody tr td #contact img {
+                width: 30px;
+                height: 30px;
+                object-fit: cover;
+                margin-right: 10px;
+            }
+
 
             .main-panel .content-wrapper .home-tab .table-sorter-wrapper table tbody tr td .contact .name {
                 font-weight: bold;
@@ -334,7 +346,7 @@
         }
 
 
-        .main-panel .content-wrapper .home-tab .dashboard-content .dashboard-top .all button {
+        .main-panel .content-wrapper .home-tab .dashboard-content .dashboard-top .all a {
             margin: 0;
             padding-top: 10px;
             padding-bottom: 10px;
@@ -343,7 +355,7 @@
             align-items: center;
         }
 
-            .main-panel .content-wrapper .home-tab .dashboard-content .dashboard-top .all button i {
+            .main-panel .content-wrapper .home-tab .dashboard-content .dashboard-top .all a i {
                 margin-left: 8px;
                 font-size: 12px;
             }

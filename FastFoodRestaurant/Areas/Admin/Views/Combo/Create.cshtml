@@ -1,0 +1,91 @@
+﻿@{
+    var currentId = ViewData["CurrentId"] as string;
+    var menusList = ViewData["MenusList"] as List<MenuInfo>;
+    ViewData["Title"] = "Tạo thực đơn";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Thông tin ưu đãi</h2>
+        <div class="create-info">Thời gian tạo: 07/10/2024</div>
+        <form class="forms-sample" asp-controller="Combo" asp-action="Create" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Mã ưu đãi</label>
+                        <input type="text" required="required" class="form-control"
+                               name="ComboId" value="@currentId" placeholder="Mã ưu đãi">
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label for="input">Tên ưu đãi</label>
+                        <input type="text" required="required" class="form-control"
+                               name="Name"
+                               placeholder="Tên ưu đãi">
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="form-group">
+                        <label>Hình ảnh danh mục</label>
+                        <input type="file" name="pictureFile" id="fileInput" class="file-upload-default" accept="image/*">
+                        <div class="input-group col-xs-12">
+                            <input type="text" class="form-control file-upload-info" disabled="" placeholder="Tải hình ảnh lên...">
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button" onclick="document.getElementById('fileInput').click();" style=" margin-right: 0;">Upload</button>
+                            </span>
+                        </div>
+                        <img src="temp" class="image-preview" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="select">
+                        <label>Danh sách món ăn</label>
+                        <select class="choose" id="menu">
+                            <option value="" disabled selected>--Select Menu--</option>
+                            @foreach(var obj in menusList) 
+                            {
+                                <option value="@obj.MenuId" price="@obj.Price" data-name="@obj.Name">@obj.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>Giá tiền</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">VND</span>
+                            </div>
+
+                            <input type="text" name="Price" class="form-control" id="total" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="table-sorter-wrapper">
+                        <table id="myTable" class="table table-hover">
+                            <thead>
+                            <th class="sortStyle">Mã thực đơn</th>
+                            <th class="sortStyle">Tên</th>
+                            <th class="sortStyle">Số lượng</th>
+                            <th class="sortStyle">Giá tiền</th>
+                            <th class="sortStyle">Xóa</th>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <div class="total-price" style="margin-top: 20px; border-top: 1px solid black; padding-top: 10px; margin-bottom: 20px; text-align: right;">
+                            <b>Tổng tiền: 0 đ</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn btn-primary me-2" id="submit">Submit</button>
+                <button class="btn btn-light">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

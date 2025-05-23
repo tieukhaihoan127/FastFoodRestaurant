@@ -1,6 +1,8 @@
 ﻿using FastFoodRestaurant.Data;
+using FastFoodRestaurant.DTO;
 using FastFoodRestaurant.Models;
 using FastFoodRestaurant.Repository.IGenericRepository;
+using System.Linq.Expressions;
 
 namespace FastFoodRestaurant.Repository
 {
@@ -9,6 +11,12 @@ namespace FastFoodRestaurant.Repository
         private ApplicationDbContext _db;
         public CategoryRepository(ApplicationDbContext db) : base(db) {
             _db = db;
+        }
+
+        public List<CategoryIdName> GetAllIds(Expression<Func<Category, CategoryIdName>> filter)
+        {
+            IQueryable<Category> query = dbSet;
+            return query.Select(filter).ToList();
         }
 
         public void Save()

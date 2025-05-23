@@ -12,7 +12,7 @@ namespace FastFoodRestaurant.Models
         [Required]
         [MaxLength(100)]
         public string Description { get; set; }
-        [Range(0, 1000)]
+        [Range(1001, int.MaxValue, ErrorMessage = "Giá trị phải lớn hơn 1000")]
         public double Price { get; set; }
         public string PictureUrl { get; set; }
         [Required]

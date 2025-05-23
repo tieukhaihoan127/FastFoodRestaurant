@@ -1,5 +1,4 @@
-﻿@using FastFoodRestaurant.DTO
-@{
+﻿@{
     var currentId = ViewData["CurrentId"] as string;
     var categoriesList = ViewData["CategoryList"] as List<CategoryIdName>;
     ViewData["Title"] = "Tạo thực đơn";
@@ -22,8 +21,7 @@
                     <div class="form-group">
                         <label for="input">Tên món ăn</label>
                         <input type="text" required="required" class="form-control"
-                               name="Name" value=""
-                               placeholder="Tên món ăn">
+                               name="Name" placeholder="Tên món ăn">
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -73,7 +71,7 @@
             </div>
             <div class="d-flex align-items-center">
                 <button type="submit" class="btn btn-primary me-2">Submit</button>
-                <a href="@Url.Action("Index", "Menu")" class="btn btn-light">Cancel</a>
+                <a class="btn btn-light" id="cancel">Cancel</a>
             </div>
         </form>
     </div>

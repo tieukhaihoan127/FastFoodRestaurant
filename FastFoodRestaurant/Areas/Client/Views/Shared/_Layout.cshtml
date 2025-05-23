@@ -26,9 +26,9 @@
             <div class="container">
                 <div class="header-cover">
                     <div class="header-menu">
-                        <div class="header-brand">
+                        <a asp-area="Client" asp-controller="Home" asp-action="Index" class="header-brand">
                             <img src="/assets/images/kfcword.png" alt="">
-                        </div>
+                        </a>
                         <ul id="primary">
                             <li>
                                 <a asp-area="Client" asp-controller="Promotion" asp-action="Index">KHUYẾN MÃI</a>
@@ -45,7 +45,7 @@
                         </ul>
                     </div>
                     <div class="header-function">
-                        <button>Order Now</button>
+                        <button> <a asp-area="Client" asp-controller="Menu" asp-action="Index" style="text-decoration:none; color:white;">Order Now</a></button>
                         <ul>
                             <li>
                                 <a asp-area="Client" asp-controller="Cart" asp-action="Index">
@@ -154,7 +154,7 @@
                 </div>
             </div>
             <div class="footer-content">
-                <b>2024 KFC All Rights Reserved</b> Site by LDCC
+                <b>2024 Chicken Spicy All Rights Reserved</b> Site by LDCC
             </div>
         </div>
         <!-- End Footer -->
@@ -168,9 +168,10 @@
     crossorigin="anonymous"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script async defer src="https://maps.gomaps.pro/maps/api/js?key=AlzaSy5Dos38Zq3IEhBZGYuBLAMPWDoWZAb-l1L&callback=initMap&v=weekly&solution_channel=GMP_CCS_customcontrols_v2"></script>
-<script type="text/javascript" src="~/assets/js/map.js"></script>
+@* <script async defer src="https://maps.gomaps.pro/maps/api/js?key=AlzaSy5Dos38Zq3IEhBZGYuBLAMPWDoWZAb-l1L&callback=initMap&v=weekly&solution_channel=GMP_CCS_customcontrols_v2"></script>
+<script type="text/javascript" src="~/assets/js/map.js"></script> *@
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="slick/slick.min.js"></script>
 <script type="text/javascript" src="~/assets/js/slick.js"></script>
+<script type="text/javascript" src="~/assets/js/custom.js"></script>
 </html>

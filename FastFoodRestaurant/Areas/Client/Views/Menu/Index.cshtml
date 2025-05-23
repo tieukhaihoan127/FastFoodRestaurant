@@ -54,7 +54,7 @@
                 }
             </div>
             <div class="button" style="margin-top:0;">
-                <a href="/">Xem thêm thực đơn</a>
+                <a asp-area="Client" asp-controller="Promotion" asp-action="Index">Xem thêm thực đơn</a>
             </div>
             <div class="col-xxl-12 d-flex justify-content-center">
                 <div class="line"></div>
@@ -85,7 +85,9 @@
                                             @obj2.Name
                                         </div>
                                         <div class="order-button">
-                                            <button>Đặt hàng</button>
+                                            <form asp-area="Client" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@obj2.MenuId" method="POST">
+                                                <button type="submit">Đặt hàng</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +96,7 @@
                     }
                 </div>
                 <div class="button" style="margin-top:0;">
-                    <a href="/">Xem thêm thực đơn</a>
+                    <a asp-area="Client" asp-controller="Menu" asp-action="DetailCategory" asp-route-id="@obj1.CategoryId">Xem thêm thực đơn</a>
                 </div>
                 <div class="col-xxl-12 d-flex justify-content-center">
                     <div class="line"></div>

@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-            <div class="static-element">
+            <div class="static-element" style="cursor:pointer;">
                 <div class="content-element">
                     <div class="title-element">
                         Refresh
@@ -89,28 +89,28 @@
 </div>
 <div class="d-sm-flex align-items-center justify-content-between">
     <div class="btn-wrapper">
-        <div class="select">
-            <select class="choose ward">
+        <form class="select" method="POST">
+            <select class="choose" name="isPaid" id="dropdown">
                 <option value="" disabled selected>Thanh toán</option>
-                <option value="1">Chưa thanh toán</option>
-                <option value="0">Đã thanh toán</option>
+                <option value="False">Chưa thanh toán</option>
+                <option value="True">Đã thanh toán</option>
             </select>
-        </div>
-        <div class="select">
-            <select class="choose ward">
+        </form>
+        <form class="select" id="form-status" method="POST">
+            <select class="choose" name="Status" id="dropdown2">
                 <option value="" disabled selected>Tình trạng</option>
-                <option value="1">Đơn hàng mới</option>
-                <option value="2">Đang chuẩn bị</option>
-                <option value="3">Đã hoàn thành</option>
+                <option value="new">Đơn hàng mới</option>
+                <option value="prepare">Đang chuẩn bị</option>
+                <option value="finished">Đã hoàn thành</option>
             </select>
-        </div>
+        </form>
         <a class="btn btn-danger text-white delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
     </div>
-    <div class="filter">
-        <input type="text" placeholder="Filter mã đơn" name="object-id">
-        <input type="text" placeholder="Filter số điện thoại" name="object-name">
-        <a id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a>
-    </div>
+    <form class="filter" method="POST">
+        <input type="text" placeholder="Filter mã đơn" name="object_id">
+        <input type="text" placeholder="Filter số điện thoại" name="object_name">
+        <button type="submit" id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+    </form>
 </div>
 <div class="table-sorter-wrapper">
     <table id="myTable" class="table table-hover">
@@ -144,7 +144,7 @@
                     <td>@obj.TotalPrice đ </td>
                     <td>
                         <div class="payment">
-                            @if (obj.PaymentStatus) {
+                            @if (obj.PaymentStatus == false) {
                                 <div class="status">Chưa thanh toán <i class="fa-solid fa-circle-check"></i></div>
                             }
                             else {

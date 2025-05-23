@@ -13,11 +13,11 @@
         <a asp-controller="Category" asp-action="Create" class="btn btn-success text-white plus"><i class="fa-solid fa-plus"></i> Thêm</a>
         <a class="btn btn-danger text-white delete-multi"><i class="fa-solid fa-minus"></i> Xóa nhiều</a>
     </div>
-    <div class="filter">
-        <input type="text" placeholder="Filter mã danh mục" name="object-id">
-        <input type="text" placeholder="Filter tên danh mục" name="object-name">
-        <a id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</a>
-    </div>
+    <form class="filter" method="POST">
+        <input type="text" placeholder="Filter mã danh mục" name="object_id">
+        <input type="text" placeholder="Filter tên danh mục" name="object_name">
+        <button type="submit" id="filterButton" class="btn btn-primary text-white me-0 search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+    </form>
 </div>
 <div class="table-sorter-wrapper">
     <table id="myTable" class="table table-hover">

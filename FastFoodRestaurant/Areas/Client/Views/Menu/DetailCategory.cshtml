@@ -1,0 +1,68 @@
+﻿@{
+    var categoryList = ViewData["CategoryList"] as List<Category>;
+    var comboList = ViewData["ComboList"] as List<Combo>;
+    var menuList = ViewData["MenuList"] as List<Menu>;
+    var uniqueCategoryList = ViewData["UniqueCategory"] as List<Category>;
+    var currentCategory = ViewData["CurrentCategory"] as List<Category>;
+    ViewData["Title"] = "Thực đơn";
+}
+
+
+<!-- Slider -->
+<div class="category-menu">
+    <div class="container">
+        <div class="slideshow-menu slick-arrow-square">
+            @foreach (var obj in categoryList)
+            {
+                <div class="slick-slide">
+                    <div class="slide-content">
+                        <a href="/">
+                            <img src="@obj.PictureUrl" alt="menu1">
+                            <div class="slide-text">@obj.Name</div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="menu-content">
+    @foreach (var obj1 in currentCategory)
+    {
+        <div class="order-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="menu-title">
+                            @obj1.Name
+                        </div>
+                    </div>
+                    @foreach (var obj2 in menuList)
+                    {
+                        @if (obj2.CategoryId == obj1.CategoryId)
+                        {
+                            <div class="col-xxl-3">
+                                <div class="promotion-box">
+                                    <div class="order-image">
+                                        <img src="@obj2.PictureUrl" alt="">
+                                    </div>
+                                    <div class="order-text">
+                                        <div class="promotion-name">
+                                            @obj2.Name
+                                        </div>
+                                        <div class="order-button">
+                                            <form asp-area="Client" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@obj2.MenuId" method="POST">
+                                                <button type="submit">Đặt hàng</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<!-- End Slider -->

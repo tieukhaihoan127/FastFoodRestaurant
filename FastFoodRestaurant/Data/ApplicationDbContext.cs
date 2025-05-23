@@ -24,6 +24,8 @@ namespace FastFoodRestaurant.Data
         public DbSet<ComboInformation> ComboInformations { get; set; }
         public DbSet<VoucherDetail> VoucherDetails { get; set; }
 
+        public DbSet<CartItem> CartItem { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BillDetail>()
